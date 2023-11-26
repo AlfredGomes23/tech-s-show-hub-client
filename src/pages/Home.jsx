@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import Banner from "../components/Banner";
 import Featured from "../components/Featured";
 import Trending from "../components/Trending";

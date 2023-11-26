@@ -14,7 +14,7 @@ const Navbar = () => {
         <li><NavLink to='products'>Products</NavLink></li>
         {
             user?.email ?
-                <li className="dropdown hidden md:block">
+                <li className="dropdown hidden md:block ml-3">
                     <div tabIndex={0} role="button" className="btn btn-ghost p-0">
                         <img className="avatar w-10 h-10 rounded-full" src={user?.photoURL} alt="" />
                     </div>
