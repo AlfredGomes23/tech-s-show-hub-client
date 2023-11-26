@@ -28,14 +28,6 @@ const routes = createBrowserRouter([
                 path: 'product/:id',
                 element: <ProductDetails></ProductDetails>
             },
-            {
-                path: 'login',
-                element: <Login></Login>
-            },
-            {
-                path: 'register',
-                element: <Register></Register>
-            },
         ]
     },
     {
@@ -43,10 +35,22 @@ const routes = createBrowserRouter([
         element: <DashboardLayout></DashboardLayout>,
         children: [
             {
+                index:true,
+                element: ''
+            },
+            {
                 path: '',
                 element: ''
             },
         ]
+    },
+    {
+        path: 'login',
+        element: <Login></Login>
+    },
+    {
+        path: 'register',
+        element: <Register></Register>
     },
 ]);
 export default routes;

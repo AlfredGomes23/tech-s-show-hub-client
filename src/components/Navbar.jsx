@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { TiThMenuOutline } from "react-icons/ti";
 
 const Navbar = () => {
-    const user = { email: true, displayName: 'test', photoURL: 'https://i.ibb.co/FmcfYpF/Education.png' }
+    const user = { email: false, displayName: 'test', photoURL: 'https://i.ibb.co/FmcfYpF/Education.png' }
     const navLinks = <>
         <li className="px-4">{user?.displayName}</li>
         <li><Link to='/dashboard'>Dashboard</Link></li>
