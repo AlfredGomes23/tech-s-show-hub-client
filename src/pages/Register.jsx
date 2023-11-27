@@ -5,10 +5,12 @@ import 'aos/dist/aos.css';
 import Swal from 'sweetalert2'
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 const Register = () => {
     const { createUser, updateUser } = useAuth();
     const navigate = useNavigate();
+    const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
         AOS.init({
@@ -20,7 +22,7 @@ const Register = () => {
 
     //on submit register
     const onSubmit = (data) => {
-        console.log(data);
+        // console.log(data);
         const { name, url, email, password } = data;
         //confirming
         Swal.fire({
@@ -31,22 +33,35 @@ const Register = () => {
             confirmButtonText: "Register",
             showDenyButton: true,
             denyButtonText: 'Cancel'
-        }).then( async (result) => {
+        }).then(async (result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
                 try {
+                    //create and set name, url
                     await createUser(email, password);
                     await updateUser(name, url);
-                    Swal.fire({
-                        position: "center",
-                        icon: "success",
-                        title: "Account Registered",
-                        showConfirmButton: false,
-                        timer: 1000
-                    });
-                    //TODO: add on database
-                    //go to home
-                    navigate('/', { replace: true });
+                    //add the user to database
+                    await axiosSecure.post('/user', {
+                        name,
+                        email,
+                        photoURL: url,
+                        role: 'user'
+                    })
+                        .then(res => {
+                            // console.log(res?.data);
+                            if (res?.data?.insertedId) {
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "success",
+                                    title: "Account Registered",
+                                    showConfirmButton: false,
+                                    timer: 1000
+                                });
+                                //go to home
+                                navigate('/', { replace: true });
+                            }
+                            else throw "Failed."
+                        });
                 } catch (err) {
                     Swal.fire({
                         position: "center",
