@@ -13,7 +13,7 @@ const Footer = () => {
         toast.success("Subscribed.");
     }
     return (
-        <footer className="bg-base-200">
+        <footer className="bg-base-200 rounded-xl">
             <div className="footer lg:px-10">
                 {/* 1st 1/2 */}
                 <aside className="mx-auto">

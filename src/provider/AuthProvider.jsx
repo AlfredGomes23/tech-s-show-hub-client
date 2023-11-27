@@ -2,6 +2,7 @@
 import { createContext, useEffect, useState } from "react";
 import auth from "../config/firebase.config";
 import { GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 
 
@@ -11,18 +12,19 @@ const gProvider = new GoogleAuthProvider();
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const axiosPublic = useAxiosPublic();
 
     //create user
     const createUser = (email, password) => {
         setLoading(true);
-        return createUserWithEmailAndPassword( auth, email, password);
+        return createUserWithEmailAndPassword(auth, email, password);
     };
     //update user
-    const updateUser = ( name, url ) => {
+    const updateUser = (name, url) => {
         setLoading(true);
         return updateProfile(auth.currentUser, {
             displayName: name,
-            photoURL :url
+            photoURL: url
         });
     };
     //login
@@ -33,17 +35,30 @@ const AuthProvider = ({ children }) => {
     //google sign in
     const signIn = () => {
         setLoading(true);
-        return signInWithPopup( auth, gProvider );
+        return signInWithPopup(auth, gProvider);
     };
     //observer
-    useEffect( () => {
-        const unSubscribe = onAuthStateChanged(auth, currentUser => {
-            console.log(currentUser);
+    useEffect(() => {
+        const unSubscribe = onAuthStateChanged(auth, async currentUser => {
             setUser(currentUser);
+            // console.log(currentUser);
+            if (currentUser?.email) {
+                //get jwt token and save it
+                await axiosPublic.post('/jwt', { email: currentUser.email })
+                    .then(res => {
+                        // console.log(res?.data);
+                        if (res.data.token) {
+                            localStorage.setItem('access_key', res?.data?.token);
+                        }
+                    })
+            } else {
+                //remove jwt token
+                localStorage.removeItem('access_key');
+            }
             setLoading(false);
         });
         return () => unSubscribe();
-    }, []);
+    }, [axiosPublic]);
     //logout
     const logOut = () => {
         setLoading(true);

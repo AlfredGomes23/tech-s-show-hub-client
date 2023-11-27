@@ -34,7 +34,8 @@ const Login = () => {
             Swal.fire({
                 position: "center",
                 icon: "success",
-                title: "You are Logged In",
+                title: "Logged In",
+                text:'Welcome Back',
                 showConfirmButton: false,
                 timer: 1000
             });
@@ -78,7 +79,7 @@ const Login = () => {
                                 //navigate
                                 navigate(form, { replace: true });
                             } else {
-                                // console.log(displayName, email,photoURL);
+                                console.log(displayName, email,photoURL);
                                 //add the new user to database
                                 await axiosSecure.post('/user', {
                                     displayName,

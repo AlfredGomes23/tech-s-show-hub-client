@@ -46,8 +46,7 @@ const Register = () => {
                         email,
                         photoURL: url,
                         role: 'user'
-                    })
-                        .then(res => {
+                    }).then(res => {
                             // console.log(res?.data);
                             if (res?.data?.insertedId) {
                                 Swal.fire({
