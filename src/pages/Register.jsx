@@ -4,49 +4,60 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Swal from 'sweetalert2'
 import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 const Register = () => {
+    const { createUser, updateUser } = useAuth();
     const navigate = useNavigate();
+
     useEffect(() => {
         AOS.init({
             duration: 500
         });
     }, []);
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
 
+    //on submit register
     const onSubmit = (data) => {
         console.log(data);
-        //add on database and firebase
-
+        const { name, url, email, password } = data;
+        //confirming
         Swal.fire({
             title: "Are you sure?",
-            text: `Your name: [ ${data?.name} ],
-            Your Email: [ ${data?.email} ],
-            Your Photo URL: [ ${data?.url} ]`,
-            showDenyButton: true,
+            text: `Your name: [ ${name} ],
+            Your Email: [ ${email} ],
+            Your Photo URL: [ ${url} ]`,
             confirmButtonText: "Register",
-            denyButtonText: `Want To Change`
-        }).then((result) => {
+            showDenyButton: true,
+            denyButtonText: 'Cancel'
+        }).then( async (result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                Swal.fire({
-                    position: "center",
-                    icon: "success",
-                    title: "Account Registered",
-                    showConfirmButton: false,
-                    timer: 1000
-                });
-                //go to home
-                navigate('/', { replace: true });
+                try {
+                    await createUser(email, password);
+                    await updateUser(name, url);
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Account Registered",
+                        showConfirmButton: false,
+                        timer: 1000
+                    });
+                    //TODO: add on database
+                    //go to home
+                    navigate('/', { replace: true });
+                } catch (err) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "error",
+                        title: err,
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+
             }
-            // else if (result.isDenied) {
-            //     Swal.fire("Changes are not saved", "", "info");
-            // }
         });
 
 

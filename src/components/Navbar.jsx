@@ -1,14 +1,37 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Link, NavLink } from "react-router-dom";
 import { TiThMenuOutline } from "react-icons/ti";
+import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
-    const user = { email: false, displayName: 'test', photoURL: 'https://i.ibb.co/FmcfYpF/Education.png' }
+    const { user, logOut } = useAuth();
+
+    const handleLogOut = async () => {
+        try{
+            await logOut();
+            Swal.fire({
+                position: "center",
+                icon: "warning",
+                title: "You are Logged Out.",
+                showConfirmButton: false,
+                timer: 1500
+            });
+        }catch(err){
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: err,
+                showConfirmButton: false,
+                timer: 1000
+            });
+        }
+    };
     const navLinks = <>
         <li className="px-4">{user?.displayName}</li>
         <li><Link to='/dashboard'>Dashboard</Link></li>
-        <li><button className="btn btn-sm btn-ghost">Logout</button></li>
-    </>
+        <li><button className="btn btn-sm btn-ghost" onClick={handleLogOut}>Logout</button></li>
+    </>;
     const links = <>
         <li><NavLink to='/'>Home</NavLink></li>
         <li><NavLink to='products'>Products</NavLink></li>
@@ -23,11 +46,13 @@ const Navbar = () => {
                     </ul>
                 </li>
                 : <li><NavLink to='login'>Login</NavLink></li>}
-    </>
+    </>;
+
+
     return (
         <div className="navbar bg-base-100 p-5">
             {/* profile dropdown at start */}
-            { user?.email && <div className="dropdown md:hidden">
+            {user?.email && <div className="dropdown md:hidden">
                 <div tabIndex={0} className="btn btn-ghost p-0">
                     <img className="avatar w-10 h-10 rounded-full" src={user?.photoURL} alt="" />
                 </div>

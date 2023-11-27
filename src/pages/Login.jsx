@@ -1,13 +1,16 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle, FcHome, FcPrevious } from "react-icons/fc";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import useAuth from "../hooks/useAuth";
 
 
 const Login = () => {
+    const { login, signIn } = useAuth();
+    const [err, setErr] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
     const form = location?.state?.pathname || '/';
@@ -17,25 +20,58 @@ const Login = () => {
         });
     }, []);
 
-    const {
-        register,
-        handleSubmit
-    } = useForm();
+    const { register, handleSubmit } = useForm();
 
-    const onSubmit = (data) => {
-        console.log(data);
-        //add on database and firebase
+    //login by email
+    const onSubmit = async (data) => {
+        // console.log(data);
+        const { email, password } = data;
+        try {
+            await login(email, password);
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "You are Logged In",
+                showConfirmButton: false,
+                timer: 1000
+            });
+            //navigate
+            navigate(form, { replace: true });
+        } catch (err) {
+            setErr(err.message);
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: err.message,
+                showConfirmButton: false,
+                timer: 1000
+            });
+        }
 
+    };
 
-        Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Account Registered",
-            showConfirmButton: false,
-            timer: 1000
-        });
-        //navigate
-        navigate(form, { replace: true });
+    //sign in by google
+    const handleSignIn = async () => {
+        try {
+            await signIn();
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "You are Logged In",
+                showConfirmButton: false,
+                timer: 1000
+            });
+            //navigate
+            navigate(form, { replace: true });
+        } catch (err) {
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: err,
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
     };
 
     return (
@@ -50,7 +86,11 @@ const Login = () => {
                 <div className="lg:w-1/2 pt-10 md:pt-0" data-aos="slide-right">
                     <div className="card shrink-0 w-96 shadow-2xl bg-base-100 mx-auto">
                         <h1 className="text-5xl text-center font-bold">Login now!</h1>
+                        {
+                            err ? <p className="text-center text-error font-semibold">{err}</p> : ''
+                        }
                         <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+
                             {/* email */}
                             <div className="form-control">
                                 <label className="label">
@@ -80,8 +120,13 @@ const Login = () => {
                         </form>
                         {/* bottom part*/}
                         <p className="text-center">New Here? <Link to='/register' className="link link-primary font-medium">Register</Link></p>
+
                         <p className="ml-5 text-secondary font-medium">OR,</p>
-                        <button className="btn lg:w-2/3 mx-auto bg-gradient-to-r from-primary to-accent text-white text-2xl mb-5">Login with <FcGoogle className="text-4xl" /></button>
+
+                        <button className="btn lg:w-2/3 mx-auto bg-gradient-to-r from-primary to-accent text-white text-2xl mb-5" onClick={handleSignIn} >
+                            Login with
+                            <FcGoogle className="text-4xl" />
+                        </button>
                     </div>
                 </div>
             </div>

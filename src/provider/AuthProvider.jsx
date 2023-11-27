@@ -33,11 +33,12 @@ const AuthProvider = ({ children }) => {
     //google sign in
     const signIn = () => {
         setLoading(true);
-        return signInWithPopup(auth, gProvider);
+        return signInWithPopup( auth, gProvider );
     };
     //observer
     useEffect( () => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
+            console.log(currentUser);
             setUser(currentUser);
             setLoading(false);
         });
