@@ -1,6 +1,15 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Register = () => {
+    useEffect(() => {
+        AOS.init({
+            duration: 500
+        });
+    }, []);
+
     const {
         register,
         handleSubmit,
@@ -9,12 +18,13 @@ const Register = () => {
 
     const onSubmit = (data) => {
         console.log(data);
+
     };
 
     return (
-        <div className="hero min-h-screen bg-base-200 py-5">
-            <div className="hero-content flex-col w-fit shadow-2xl bg-base-100 rounded-xl max-w-lg">
-                <h1 className="text-5xl text-center font-bold">Register here!</h1>
+        <div className="hero min-h-screen bg-base-200 py-5  bg-gradient-to-r from-accent to-primary">
+            <div className="hero-content flex-col w-fit shadow-2xl bg-base-100 rounded-xl max-w-lg" data-aos="zoom-in">
+                <h1 className="text-5xl text-center font-bold ">Register here!</h1>
                 <form onSubmit={handleSubmit(onSubmit)} className="card-body py-0">
                     {/* name url */}
                     <div className="flex flex-col md:flex-row gap-5">
@@ -78,7 +88,7 @@ const Register = () => {
                     </div>
                     {errors.checkbox && <span className="text-center text-error font-semibold">You must accept our Terms and conditions</span>}
                     <div className="form-control">
-                        <button className="btn btn-primary w-1/2 mx-auto">Register</button>
+                        <button className="btn w-1/2 mx-auto bg-gradient-to-r from-accent to-primary text-secondary text-3xl ">Register</button>
                     </div>
                 </form>
             </div>
