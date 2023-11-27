@@ -2,8 +2,11 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import Swal from 'sweetalert2'
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+    const navigate = useNavigate();
     useEffect(() => {
         AOS.init({
             duration: 500
@@ -18,6 +21,34 @@ const Register = () => {
 
     const onSubmit = (data) => {
         console.log(data);
+        //add on database and firebase
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: `Your name: [ ${data?.name} ],
+            Your Email: [ ${data?.email} ],
+            Your Photo URL: [ ${data?.url} ]`,
+            showDenyButton: true,
+            confirmButtonText: "Register",
+            denyButtonText: `Want To Change`
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                Swal.fire({
+                    position: "center",
+                    icon: "success",
+                    title: "Account Registered",
+                    showConfirmButton: false,
+                    timer: 1000
+                });
+                //go to home
+                navigate('/', { replace: true });
+            }
+            // else if (result.isDenied) {
+            //     Swal.fire("Changes are not saved", "", "info");
+            // }
+        });
+
 
     };
 
@@ -26,7 +57,7 @@ const Register = () => {
             <div className="hero-content flex-col w-fit shadow-2xl bg-base-100 rounded-xl max-w-lg" data-aos="zoom-in">
                 <h1 className="text-5xl text-center font-bold ">Register here!</h1>
                 <form onSubmit={handleSubmit(onSubmit)} className="card-body py-0">
-                    {/* name url */}
+                    {/* name, url */}
                     <div className="flex flex-col md:flex-row gap-5">
                         <div className="form-control">
                             <label className="label">
@@ -51,7 +82,7 @@ const Register = () => {
                                 required />
                         </div>
                     </div>
-                    {/* email password */}
+                    {/* email, password */}
                     <div>
                         <div className="flex flex-col md:flex-row gap-5">
                             <div className="form-control">
@@ -77,7 +108,7 @@ const Register = () => {
                             </div>
                         </div>
                         {errors.email && <p className="text-center text-error font-semibold">Enter a Valid Email Address</p>}
-                        {errors.password && <p className="text-center text-error font-semibold">Your Password MUST contain Minimum 6 characters Including at least a Upper, a Lower case letter, also a Number</p>}
+                        {errors.password && <p className="text-center text-error font-semibold">Password MUST contain Minimum 6 characters Including at least a Upper, a Lower case letter, also a Number</p>}
                     </div>
                     <div className="flex gap-1 mx-auto">
                         <input type="checkbox"
@@ -88,7 +119,7 @@ const Register = () => {
                     </div>
                     {errors.checkbox && <span className="text-center text-error font-semibold">You must accept our Terms and conditions</span>}
                     <div className="form-control">
-                        <button className="btn w-1/2 mx-auto bg-gradient-to-r from-accent to-primary text-secondary text-3xl ">Register</button>
+                        <button className="btn w-1/2 mx-auto bg-gradient-to-r from-accent to-primary text-secondary text-3xl mt-5">Register</button>
                     </div>
                 </form>
             </div>
