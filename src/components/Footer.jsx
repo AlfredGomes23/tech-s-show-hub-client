@@ -6,6 +6,9 @@ import toast from 'react-hot-toast';
 const Footer = () => {
     const handleSubmit = e => {
         e.preventDefault();
+        //TODO:send to database
+        const email = e.target.email.value;
+        console.log(email);
 
         toast.success("Subscribed.");
     }
@@ -34,7 +37,7 @@ const Footer = () => {
                                 <span className="label-text">Enter your email address</span>
                             </label>
                             <div className="join">
-                                <input type="text" placeholder="username@site.com" className="input input-bordered join-item" />
+                                <input type="text" name="email" placeholder="username@site.com" className="input input-bordered join-item" />
                                 <button className="btn btn-primary join-item">Subscribe</button>
                             </div>
                         </fieldset>
