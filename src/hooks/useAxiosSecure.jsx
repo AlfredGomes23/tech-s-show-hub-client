@@ -1,4 +1,7 @@
 import axios from 'axios';
+import useAuth from './useAuth';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const axiosSecure = axios.create({
     baseURL: 'http://localhost:5000',
@@ -6,6 +9,9 @@ const axiosSecure = axios.create({
 })
 
 const useAxiosSecure = () => {
+    const { logOut } = useAuth();
+    const navigate = useNavigate();
+
     //intercept request to add token
     axiosSecure.interceptors.request.use(config => {
         //get and set token in config
@@ -15,7 +21,25 @@ const useAxiosSecure = () => {
     }, error => {
         console.log(error);
         return Promise.reject(error);
-    })
+    });
+
+    //intercept response for errors
+    axiosSecure.interceptors.response.use(response => response, async error => {
+        const status = error?.response?.status;
+        if(status === 401 || status === 403){
+            await logOut();
+            Swal.fire({
+                position: "center",
+                icon: "error",
+                title: "Access Denied.",
+                showConfirmButton: false,
+                timer: 1500
+            });
+            navigate('/login');
+        }
+        return Promise.reject(error);
+    });
+    
     return axiosSecure;
 };
 
