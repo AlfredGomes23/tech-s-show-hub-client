@@ -42,7 +42,7 @@ const Register = () => {
                     await updateUser(name, url);
                     //add the user to database
                     await axiosSecure.post('/user', {
-                        name,
+                        displayName: name,
                         email,
                         photoURL: url,
                         role: 'user'

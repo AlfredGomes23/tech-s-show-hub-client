@@ -6,6 +6,7 @@ import 'aos/dist/aos.css';
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import useAuth from "../hooks/useAuth";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 
 const Login = () => {
@@ -14,6 +15,8 @@ const Login = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const form = location?.state?.pathname || '/';
+    const axiosSecure = useAxiosSecure();
+
     useEffect(() => {
         AOS.init({
             duration: 500
@@ -53,16 +56,56 @@ const Login = () => {
     //sign in by google
     const handleSignIn = async () => {
         try {
-            await signIn();
-            Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "You are Logged In",
-                showConfirmButton: false,
-                timer: 1000
-            });
-            //navigate
-            navigate(form, { replace: true });
+            await signIn()
+                .then(async r => {
+                    const user = r?.user;
+                    const { displayName, email, photoURL } = user;
+                    console.log(r?.user);
+                    //checking if new user
+                    await axiosSecure.get(`/user/?email=${r?.user?.email}`)
+                        .then(async res => {
+                            // console.log(res?.data);
+                            //old user
+                            if (res?.data?.isRegistered) {
+                                Swal.fire({
+                                    position: "center",
+                                    icon: "success",
+                                    title:'Signed In',
+                                    text: `Welcome Back, ${displayName}.`,
+                                    showConfirmButton: false,
+                                    timer: 1000
+                                });
+                                //navigate
+                                navigate(form, { replace: true });
+                            } else {
+                                // console.log(displayName, email,photoURL);
+                                //add the new user to database
+                                await axiosSecure.post('/user', {
+                                    displayName,
+                                    email,
+                                    photoURL,
+                                    role: 'user'
+                                })
+                                    .then(res => {
+                                        console.log(res?.data);
+                                        if (res?.data?.insertedId) {
+                                            Swal.fire({
+                                                position: "center",
+                                                icon: "success",
+                                                title: "Signed Up",
+                                                text: `Welcome, ${displayName} `,
+                                                showConfirmButton: false,
+                                                timer: 1000
+                                            });
+                                            //go to home
+                                            navigate('/', { replace: true });
+                                        }
+                                        else throw "Failed."
+                                    });
+                            }
+                        })
+                })
+
         } catch (err) {
             Swal.fire({
                 position: "center",
