@@ -40,7 +40,7 @@ const AuthProvider = ({ children }) => {
     //observer
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, async currentUser => {
-            setUser(currentUser);
+            await setUser(currentUser);
             // console.log(currentUser);
             if (currentUser?.email) {
                 //get jwt token and save it
