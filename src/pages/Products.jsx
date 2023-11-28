@@ -26,9 +26,10 @@ const Products = () => {
         //TODO: fetch product of this tag
     }
 
+    //loading
     if (isLoading) return <div className=' flex justify-center items-center text-center mx-auto'>
         <p className='text-3xl text-warning'>Loading <span className="loading loading-bars loading-md"></span></p>
-    </div>
+    </div>;
 
     return (
         <div>
