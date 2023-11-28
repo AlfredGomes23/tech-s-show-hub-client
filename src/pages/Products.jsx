@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import ProductsList from '../components/ProductsList';
-import PageTitle from '../components/PageTitle';
 import Pagination from '../components/Pagination';
 import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
@@ -10,14 +9,15 @@ import { useLoaderData } from 'react-router-dom';
 const Products = () => {
     const axiosSecure = useAxiosSecure();
     const [currentPage, setCurrentPage] = useState(0);
+    const [search, setSearch] = useState('');
     const { count } = useLoaderData();
     const perPage = 20;
     const totalPage = parseInt(count / perPage) + 1;
 
-    const { data: products = [], refetch, isLoading } = useQuery({
-        queryKey: ['products', currentPage],
+    const { data: products = [], isLoading } = useQuery({
+        queryKey: ['products', currentPage, search],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/products?page=${currentPage}&limit=${perPage}`);
+            const res = await axiosSecure.get(`/products?page=${currentPage}&limit=${perPage}&search=${search}`);
             return res.data;
         }
     });
@@ -30,9 +30,7 @@ const Products = () => {
         e.preventDefault();
 
         const tag = e.target.tag.value;
-        console.log(tag);
-
-        //TODO: fetch product of this tag
+        setSearch(tag);
     }
 
     //loading
@@ -43,12 +41,15 @@ const Products = () => {
     return (
         <div>
             {/* TODO: add slider */}
-            {/* searchbar */}
-            <form onSubmit={handleSearch} className="join flex justify-center">
-                <input type='text' name='tag' className="input input-bordered join-item" placeholder="Search Tag here..." />
-                <button className="btn join-item input-bordered">Search</button>
-            </form>
-            <PageTitle title='All Products' />
+            <div className='flex justify-between px-20 flex-col md:flex-row items-center'>
+                <h1 className='text-3xl text-center'>All Products</h1>
+                {/* search bar */}
+                <form onSubmit={handleSearch} className="join flex justify-center">
+                    <input type='text' name='tag' className="input input-bordered join-item" placeholder="Search Tag here..." />
+                    <button className="btn join-item input-bordered">Search</button>
+                </form></div>
+            <div className="divider"></div>
+
             {/* cards */}
             <div>
                 <ProductsList products={products} lgCols={4}></ProductsList>
