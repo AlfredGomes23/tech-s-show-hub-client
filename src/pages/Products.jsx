@@ -2,17 +2,26 @@ import { useQuery } from '@tanstack/react-query'
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import ProductsList from '../components/ProductsList';
 import PageTitle from '../components/PageTitle';
+import Pagination from '../components/Pagination';
+import { useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
 
 
 const Products = () => {
     const axiosSecure = useAxiosSecure();
+    const [currentPage, setCurrentPage] = useState(0);
+    const { count } = useLoaderData();
+    const perPage = 20;
+    const totalPage = parseInt(count / perPage) + 1;
+
     const { data: products = [], refetch, isLoading } = useQuery({
-        queryKey: ['/products'],
+        queryKey: ['products', currentPage],
         queryFn: async () => {
-            const res = await axiosSecure.get('/products');
+            const res = await axiosSecure.get(`/products?page=${currentPage}&limit=${perPage}`);
             return res.data;
         }
     });
+
     // console.log(products);
 
 
@@ -39,10 +48,17 @@ const Products = () => {
                 <input type='text' name='tag' className="input input-bordered join-item" placeholder="Search Tag here..." />
                 <button className="btn join-item input-bordered">Search</button>
             </form>
-            <PageTitle title='All Products'/>
+            <PageTitle title='All Products' />
             {/* cards */}
             <div>
                 <ProductsList products={products} lgCols={4}></ProductsList>
+            </div>
+            <div>
+                <Pagination
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    totalPage={totalPage}
+                ></Pagination>
             </div>
 
 

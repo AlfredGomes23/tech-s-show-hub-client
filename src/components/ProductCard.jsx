@@ -15,15 +15,15 @@ const ProductCard = ({ product }) => {
                     tags?.map((tag, idx) =>
                         <span key={idx} className="bg-secondary h-fit px-1 rounded-xl text-white">{tag}</span>)}
                 </p>
-                <p><Timestamp date={posted} /></p>
+                <p>Posted: <Timestamp date={posted} /></p>
                 <div className="flex justify-around">
                     <div className="btn btn-md w-fit text-success relative">
                         <BiSolidUpvote className="text-2xl" />
-                        <span className="absolute -top-2 -right-2 outline-dashed bg-transparent p-1 rounded-full">{upvote}</span>
+                        <span className="absolute -top-1 -right-0 bg-transparent p-1 rounded-full">{upvote}</span>
                     </div>
                     <div className="btn btn-md w-fit text-error relative">
                         <BiSolidDownvote className="text-2xl" />
-                        <span className="absolute -top-2 -right-2 outline-dashed bg-transparent p-1 rounded-full">{downvote}</span>
+                        <span className="absolute -top-1 -right-0 bg-transparent p-1 rounded-full">{downvote}</span>
                     </div>
                 </div>
             </div>
