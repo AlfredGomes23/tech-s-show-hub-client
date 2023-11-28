@@ -14,7 +14,7 @@ const Products = () => {
     const perPage = 20;
     const totalPage = parseInt(count / perPage) + 1;
 
-    const { data: products = [], isLoading } = useQuery({
+    const { data: products = [], isLoading, refetch } = useQuery({
         queryKey: ['products', currentPage, search],
         queryFn: async () => {
             const res = await axiosSecure.get(`/products?page=${currentPage}&limit=${perPage}&search=${search}`);
@@ -23,8 +23,6 @@ const Products = () => {
     });
 
     // console.log(products);
-
-
     //search
     const handleSearch = e => {
         e.preventDefault();
@@ -52,7 +50,7 @@ const Products = () => {
 
             {/* cards */}
             <div>
-                <ProductsList products={products} lgCols={4}></ProductsList>
+                <ProductsList products={products} lgCols='4' refetch={refetch}></ProductsList>
             </div>
             <div>
                 <Pagination

@@ -1,10 +1,48 @@
 /* eslint-disable react/prop-types */
 import { BiSolidDownvote, BiSolidUpvote } from "react-icons/bi";
 import Timestamp from 'react-timestamp';
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import useAuth from "../hooks/useAuth";
+import { useLocation, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
-const ProductCard = ({ product }) => {
-    //TODO: fetch product by id use transtan query
-    const { _id, name, tags, image, upvote, downvote, posted } = product;
+const ProductCard = ({ product, refetch }) => {
+    const { user } = useAuth();
+    const axiosSecure = useAxiosSecure();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const { _id, name, tags, image, upvotes, downvotes, posted } = product;
+    //check if voted already
+    const canVote = () => {
+        if (!user?.email) return navigate('/login', { state: { form: location } }, { replace: true });
+        if (upvotes?.includes(user?.email) || downvotes?.includes(user?.email) || user?.email === product.owner.email) {
+            toast.error('You Can Not Vote This Product.');
+            return true;
+        }
+        else return false;
+    };
+    // console.log(isVoted());
+
+    const handleUp = () => {
+        // if (!user?.email) return navigate('/login', { state: { form: location } }, { replace: true });
+        if (canVote()) return;
+        axiosSecure.patch(`/product/${_id}?email=${user?.email}&vote=upvotes`)
+            .then((r) => {
+                if (r.data.modifiedCount)
+                    refetch();
+                toast.success('Upvoted successfully.');
+            })
+    };
+    const handleDown = () => {
+        if (canVote()) return;
+        axiosSecure.patch(`/product/${_id}?email=${user?.email}&vote=downvotes`)
+            .then((r) => {
+                if (r.data.modifiedCount)
+                    refetch();
+                toast.success('Downvoted successfully.');
+            })
+    };
 
     return (
         <div className="card card-compact w-64 bg-base-100 shadow-xl mx-auto">
@@ -17,14 +55,16 @@ const ProductCard = ({ product }) => {
                 </p>
                 <p>Posted: <Timestamp date={posted} /></p>
                 <div className="flex justify-around">
-                    <div className="btn btn-md w-fit text-success relative">
+                    {/* upvote btn */}
+                    <button onClick={handleUp} className="btn btn-md w-fit text-success relative">
                         <BiSolidUpvote className="text-2xl" />
-                        <span className="absolute -top-1 -right-0 bg-transparent p-1 rounded-full">{upvote}</span>
-                    </div>
-                    <div className="btn btn-md w-fit text-error relative">
+                        <span className="absolute -top-1 -right-0 bg-transparent p-1 rounded-full">{upvotes?.length}</span>
+                    </button>
+                    {/* downvote btn */}
+                    <button onClick={handleDown} className="btn btn-md w-fit text-error relative">
                         <BiSolidDownvote className="text-2xl" />
-                        <span className="absolute -top-1 -right-0 bg-transparent p-1 rounded-full">{downvote}</span>
-                    </div>
+                        <span className="absolute -top-1 -right-0 bg-transparent p-1 rounded-full">{downvotes?.length}</span>
+                    </button>
                 </div>
             </div>
         </div>
