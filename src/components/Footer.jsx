@@ -32,14 +32,10 @@ const Footer = () => {
                     </div>
                     <form onSubmit={handleSubmit}>
                         <header className="footer-title mt-5">Newsletter</header>
-                        <fieldset className="form-control w-80">
-                            <label className="label">
-                                <span className="label-text">Enter your email address</span>
-                            </label>
-                            <div className="join">
-                                <input type="text" name="email" placeholder="username@site.com" className="input input-bordered join-item" />
-                                <button className="btn btn-primary join-item">Subscribe</button>
-                            </div>
+                        <fieldset className="form-control w-80 join join-horizontal">
+                            <input type="text" name="email" placeholder="Enter your email address..." className="input input-bordered join-item" />
+                            <button className="btn btn-primary join-item">Subscribe</button>
+
                         </fieldset>
                     </form>
                 </nav>

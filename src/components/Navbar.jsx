@@ -51,7 +51,7 @@ const Navbar = () => {
 
 
     return (
-        <div className="navbar bg-base-100 p-5">
+        <div className="navbar bg-base-200 p-3 rounded-lg shadow-lg mb-3">
             {/* profile dropdown at start */}
             {user?.email && <div className="dropdown md:hidden">
                 <div tabIndex={0} className="btn btn-ghost p-0">
