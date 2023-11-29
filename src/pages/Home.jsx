@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet-async';
 
 const Home = () => {
     return (
-        <div>
+        <div className="-z-20">
             <Helmet><title>Tech's Show Hub | Home</title></Helmet>
             <Banner></Banner>
             <Featured></Featured>

@@ -31,7 +31,7 @@ const Banner = () => {
     if (isLoading) return <span className="loading loading-bars text-warning flex justify-center items-center text-center mx-auto"></span>;
 
     return (
-        <div className="flex flex-col md:flex-row justify-center items-center mx-auto px-1 gap-5 lg:px-0 mb-5" data-aos="zoom-out">
+        <div className="flex flex-col md:flex-row-reverse justify-center items-center mx-auto px-1 gap-5 lg:px-0 mb-5">
             {/* text */}
             <div className='md:w-1/2 h-[50vh] flex flex-col justify-center items-center gap-5 mx-auto mb-5'>
                 <p className='text-lg font-sil font-semibold'>Welcome to,</p>

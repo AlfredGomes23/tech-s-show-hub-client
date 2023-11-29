@@ -10,6 +10,9 @@ import Register from "../pages/Register";
 import Products from "../pages/Products";
 import ProductDetails from "../pages/ProductDetails";
 import PrivateRoutes from "./PrivateRoutes";
+import AddProject from "../pages/AddProject";
+import MyProjects from "../pages/MyProjects";
+import MyProfile from "../pages/MyProfile";
 
 const routes = createBrowserRouter([
     {
@@ -37,15 +40,29 @@ const routes = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <DashboardLayout></DashboardLayout>,
+        element:
+            <PrivateRoutes>
+                <DashboardLayout></DashboardLayout>
+            </PrivateRoutes>,
         children: [
             {
                 index: true,
                 element: ''
             },
             {
-                path: '',
-                element: ''
+                path: 'add-product',
+                element:
+                    <AddProject></AddProject>
+            },
+            {
+                path: 'my-products',
+                element:
+                    <MyProjects></MyProjects>
+            },
+            {
+                path: 'my-profile',
+                element:
+                    <MyProfile></MyProfile>
             },
         ]
     },
