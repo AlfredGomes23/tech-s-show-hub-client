@@ -1,13 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import './Carusole.css';
 import useAxiosPublic from '../hooks/useAxiosPublic';
 import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query'
-import Timestamp from 'react-timestamp';
+import Slider from './Slider';
 
 
 const Banner = () => {
@@ -40,18 +37,7 @@ const Banner = () => {
                 <p className='text-secondary font-if font-semibold'>*Get Coupon for Subscription*</p>
             </div>
             {/* slider */}
-            <Carousel autoPlay={true} infiniteLoop={true} className='z-0 md:w-1/2  mx-auto rounded-xl overflow-hidden'>
-                {
-                    products?.map(product =>
-                        <div key={product?._id} className='h-96 md:h-[60vh] card shadow-xl '>
-                            <img src={product?.image} alt={product?.image} className='h-96 md:h-[60vh] rounded-xl overflow-hidden' />
-                            <div className='myLegend'>
-                                <h4 className='text-white text-2xl'>{product?.name}</h4>
-                                <p className='text-sm'>Posted: <Timestamp date={product?.posted} /></p>
-                            </div>
-                        </div>)
-                }
-            </Carousel>
+            <Slider products={products}></Slider>
         </div>
     );
 };

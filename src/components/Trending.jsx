@@ -30,7 +30,7 @@ const Trending = () => {
         <div>
             <h2 className="text-3xl text-center font-medium mt-16">Trending Products</h2>
             <div className="divider"></div>
-            <ProductsList products={trending} lgCols={3}></ProductsList>
+            <ProductsList products={trending} lg='lg:grid-cols-3'></ProductsList>
             <Link to='/products' className=" btn btn-sm btn-outline btn-primary lg:btn-md flex w-fit my-3 mx-auto">Show All Products</Link>
         </div>
     );

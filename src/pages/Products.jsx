@@ -1,13 +1,14 @@
 import { useQuery } from '@tanstack/react-query'
-import useAxiosSecure from "../hooks/useAxiosSecure";
 import ProductsList from '../components/ProductsList';
 import Pagination from '../components/Pagination';
 import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
+import Slider from '../components/Slider';
+import useAxiosPublic from '../hooks/useAxiosPublic';
 
 
 const Products = () => {
-    const axiosSecure = useAxiosSecure();
+    const axiosPublic =  useAxiosPublic()
     const [currentPage, setCurrentPage] = useState(0);
     const [search, setSearch] = useState('');
     const { count } = useLoaderData();
@@ -17,8 +18,15 @@ const Products = () => {
     const { data: products = [], isLoading, refetch } = useQuery({
         queryKey: ['products', currentPage, search],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/products?page=${currentPage}&limit=${perPage}&search=${search}`);
+            const res = await axiosPublic.get(`/products?page=${currentPage}&limit=${perPage}&search=${search}`);
             return res.data;
+        }
+    });
+    const { data: trending = [] } = useQuery({
+        queryKey: ['trending'],
+        queryFn: async () => {
+            const t = await axiosPublic('/products/trending');
+            return t.data;
         }
     });
 
@@ -38,7 +46,8 @@ const Products = () => {
 
     return (
         <div>
-            {/* TODO: add slider */}
+            {/* slider */}
+            <Slider products={trending}></Slider>
             <div className='flex justify-between px-20 flex-col md:flex-row items-center'>
                 <h1 className='text-3xl text-center'>All Products</h1>
                 {/* search bar */}
@@ -50,7 +59,7 @@ const Products = () => {
 
             {/* cards */}
             <div>
-                <ProductsList products={products} lgCols='4' refetch={refetch}></ProductsList>
+                <ProductsList products={products} lg='lg:grid-cols-4' refetch={refetch}></ProductsList>
             </div>
             <div>
                 <Pagination

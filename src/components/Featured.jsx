@@ -30,7 +30,7 @@ const Featured = () => {
         <div>
             <h2 className="text-3xl text-center font-medium">Featured Products</h2>
             <div className="divider"></div>
-            <ProductsList products={featured} lgCols='4'></ProductsList>
+            <ProductsList products={featured} lg='lg:grid-cols-4'></ProductsList>
 
         </div>
     );

@@ -67,7 +67,7 @@ const Navbar = () => {
                 <div tabIndex={0} className="btn btn-ghost p-0">
                     <img className="avatar w-10 h-10 rounded-full" src={user?.photoURL} alt="" />
                 </div>
-                <ul className="dropdown-content z-50 menu p-2 shadow bg-base-100 rounded-box w-fit">
+                <ul className="dropdown-content z-10 menu p-2 shadow bg-base-100 rounded-box w-fit">
                     {navLinks}
                 </ul>
             </div>}
