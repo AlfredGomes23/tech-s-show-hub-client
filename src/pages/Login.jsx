@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FcGoogle, FcHome, FcPrevious } from "react-icons/fc";
+import { FcGoogle,  FcPrevious } from "react-icons/fc";
 import { useEffect, useState } from "react";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -14,8 +14,9 @@ const Login = () => {
     const [err, setErr] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
-    const form = location?.state?.pathname || '/';
+    const from = location?.state?.from?.pathname || '/';
     const axiosSecure = useAxiosSecure();
+    // console.log(from);
 
     useEffect(() => {
         AOS.init({
@@ -40,7 +41,7 @@ const Login = () => {
                 timer: 1000
             });
             //navigate
-            navigate(form, { replace: true });
+            navigate(from, { replace: true });
         } catch (err) {
             setErr(err.message);
             Swal.fire({
@@ -77,7 +78,7 @@ const Login = () => {
                                     timer: 1000
                                 });
                                 //navigate
-                                navigate(form, { replace: true });
+                                navigate(from, { replace: true });
                             } else {
                                 console.log(displayName, email, photoURL);
                                 //add the new user to database
@@ -120,7 +121,7 @@ const Login = () => {
 
     return (
         <div className="hero min-h-screen bg-base-200 bg-gradient-to-r from-primary to-accent">
-            <Link to={form} className="absolute top-2 left-2 flex text-3xl z-10 btn btn-ghost"><FcPrevious /> <FcHome /></Link>
+            <Link to={from} className="absolute top-2 left-2 flex text-3xl z-10 btn btn-ghost"><FcPrevious /></Link>
             <div className="hero-content flex-col lg:flex-row">
                 {/* photo */}
                 <div className="flex-1 mx-auto hidden lg:block w-1/2" data-aos="slide-left">
