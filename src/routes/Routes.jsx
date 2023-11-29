@@ -10,9 +10,9 @@ import Register from "../pages/Register";
 import Products from "../pages/Products";
 import ProductDetails from "../pages/ProductDetails";
 import PrivateRoutes from "./PrivateRoutes";
-import AddProject from "../pages/AddProject";
-import MyProjects from "../pages/MyProjects";
+import AddProduct from "../pages/AddProduct";
 import MyProfile from "../pages/MyProfile";
+import MyProducts from "../pages/MyProducts";
 
 const routes = createBrowserRouter([
     {
@@ -49,17 +49,17 @@ const routes = createBrowserRouter([
             {
                 path: 'add-product',
                 element:
-                    <AddProject></AddProject>
+                    <AddProduct></AddProduct>
             },
             {
                 path: 'my-products',
                 element:
-                    <MyProjects></MyProjects>
+                    <MyProfile></MyProfile>
             },
             {
                 path: 'my-profile',
                 element:
-                    <MyProfile></MyProfile>
+                    <MyProducts></MyProducts>
             },
             //Moderator
             // {

@@ -5,7 +5,7 @@ import useAuth from "../hooks/useAuth";
 
 const MyProfile = () => {
     const { user, loading } = useAuth();
-    const m_id = "N/A", amount = 299,applied = false, subscribed = false;
+    let m_id = "N/A", amount = 299,applied = false, subscribed = false;
 
     //loading
     if (loading) return <span className="loading loading-bars text-warning flex justify-center items-center text-center mx-auto"></span>;
