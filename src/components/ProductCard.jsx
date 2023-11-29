@@ -13,34 +13,37 @@ const ProductCard = ({ product, refetch }) => {
     const location = useLocation();
 
     const { _id, name, tags, image, upvotes, downvotes, posted } = product;
-    //check if voted already
-    const canVote = () => {
-        if (!user?.email) return navigate('/login', { state: { form: location } }, { replace: true });
-        if (upvotes?.includes(user?.email) || downvotes?.includes(user?.email) || user?.email === product.owner.email) {
-            toast.error('You Can Not Vote This Product.');
-            return true;
-        }
-        else return false;
-    };
+
+    //check if user can vote
+    let canVote = true;
+    if (upvotes?.includes(user?.email) || downvotes?.includes(user?.email) || user?.email === product.owner.email) canVote = false;
+
     // console.log(isVoted());
 
     const handleUp = () => {
-        // if (!user?.email) return navigate('/login', { state: { form: location } }, { replace: true });
-        if (canVote()) return;
+        if (!user?.email) return navigate('/login', { state: { form: location } }, { replace: true });
+
+        if (!canVote) return toast.error('You Can Not Vote.');
         axiosSecure.patch(`/product/${_id}?email=${user?.email}&vote=upvotes`)
             .then((r) => {
-                if (r.data.modifiedCount)
+                if (r.data.modifiedCount) {
+                    canVote = false;
                     refetch();
-                toast.success('Upvoted successfully.');
+                    toast.success('Upvoted successfully.');
+                }
             })
     };
     const handleDown = () => {
-        if (canVote()) return;
+        if (!user?.email) return navigate('/login', { state: { form: location } }, { replace: true });
+        if (!canVote) return toast.error('You Can Not Vote.');
+
         axiosSecure.patch(`/product/${_id}?email=${user?.email}&vote=downvotes`)
             .then((r) => {
-                if (r.data.modifiedCount)
+                if (r.data.modifiedCount) {
+                    canVote = false;
                     refetch();
-                toast.success('Downvoted successfully.');
+                    toast.success('Downvoted successfully.');
+                }
             })
     };
 
