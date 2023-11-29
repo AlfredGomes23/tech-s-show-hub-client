@@ -52,12 +52,12 @@ const routes = createBrowserRouter([
                     <AddProduct></AddProduct>
             },
             {
-                path: 'my-products',
+                path: 'my-profile',
                 element:
                     <MyProfile></MyProfile>
             },
             {
-                path: 'my-profile',
+                path: 'my-products',
                 element:
                     <MyProducts></MyProducts>
             },

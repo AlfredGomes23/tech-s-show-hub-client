@@ -5,6 +5,7 @@ import { WithContext as ReactTags } from 'react-tag-input';
 import { useState } from "react";
 import toast from "react-hot-toast";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import { useNavigate } from "react-router-dom";
 
 //get time
 function getCurrentTime() {
@@ -26,6 +27,7 @@ const AddProduct = () => {
     const axiosPublic = useAxiosPublic();
     const { register, handleSubmit } = useForm();
     const [tags, setTags] = useState([]);
+    const navigate = useNavigate();
 
     const handleDelete = i => {
         setTags(tags.filter((tag, index) => index !== i));
@@ -42,17 +44,47 @@ const AddProduct = () => {
 
         // re-render
         setTags(newTags);
-    };
-    const handleTagClick = index => {
-        console.log('The tag at index ' + index + ' was clicked');
-    };
+    };  
 
     const onSubmit = async (data) => {
         //check if no tags
         if (tags?.length < 1) return toast.error("Product Tag is Required.");
-        
+        const { p_name, description, link } = data;
 
-       
+        //upload image to hosting server
+        const imageFile = { image: data.image[0] }
+        const hostResp = await axiosPublic.post(image_hosting_api, imageFile, {
+            headers: { 'content-type': "multipart/form-data" }
+        });
+        // console.log(data, hostResp.data?.data);
+
+        //send product to server
+        if (hostResp?.data?.success) {
+            const product = {
+                name: p_name,
+                image: hostResp?.data?.data?.display_url,
+                tags: tags?.map(tag => tag?.text),
+                upvotes: [],
+                downvotes: [],
+                description: description,
+                reviews: [],
+                posted: getCurrentTime(),
+                link: link,
+                owner: {
+                    name: user?.displayName,
+                    photoURL: user?.photoURL,
+                    email: user?.email
+                },
+                featured: false,
+                status: 'pending'
+            };
+
+            const r = await axiosSecure.post('/product', product);
+            if(r?.data?.insertedId){
+                toast.success("Posted.");
+                navigate('/dashboard/my-products');
+            }
+        }
 
     };
 
@@ -85,12 +117,9 @@ const AddProduct = () => {
                             </div>
                             <ReactTags
                                 tags={tags}
-                                // suggestions={suggestions}
-                                // delimiters={delimiters}
                                 handleDelete={handleDelete}
                                 handleAddition={handleAddition}
                                 handleDrag={handleDrag}
-                                handleTagClick={handleTagClick}
                                 inputFieldPosition="inline"
                                 placeholder="Add Product Tags"
                                 autocomplete allowUnique inline
