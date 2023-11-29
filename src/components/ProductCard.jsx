@@ -3,7 +3,7 @@ import { BiSolidDownvote, BiSolidUpvote } from "react-icons/bi";
 import Timestamp from 'react-timestamp';
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import useAuth from "../hooks/useAuth";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const ProductCard = ({ product, refetch }) => {
@@ -51,7 +51,7 @@ const ProductCard = ({ product, refetch }) => {
         <div className="card card-compact w-64 bg-base-100 shadow-xl mx-auto">
             <figure><img src={image} alt={name} className="h-40" /></figure>
             <div className="card-body">
-                <h2 className="card-title">{name}</h2>
+                <Link to={`/product/${_id}`} className="card-title">{name}</Link>
                 <p className="flex gap-1 justify-center font-medium flex-wrap">Tags:{
                     tags?.map((tag, idx) =>
                         <span key={idx} className="bg-secondary h-fit px-1 rounded-xl text-white">{tag}</span>)}
