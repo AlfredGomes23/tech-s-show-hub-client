@@ -45,10 +45,7 @@ const routes = createBrowserRouter([
                 <DashboardLayout></DashboardLayout>
             </PrivateRoutes>,
         children: [
-            {
-                index: true,
-                element: ''
-            },
+            //user routes
             {
                 path: 'add-product',
                 element:
@@ -64,6 +61,12 @@ const routes = createBrowserRouter([
                 element:
                     <MyProfile></MyProfile>
             },
+            //Moderator
+            // {
+            //     path: 'my-profile',
+            //     element:
+            //         <MyProfile></MyProfile>
+            // },
         ]
     },
     {

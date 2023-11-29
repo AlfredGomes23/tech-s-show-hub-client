@@ -40,7 +40,7 @@ const Navbar = () => {
     };
     const navLinks = <>
         <li className="px-4">{user?.displayName}</li>
-        <li><Link to='/dashboard'>Dashboard</Link></li>
+        <li><Link to='/dashboard/may-profile'>Dashboard</Link></li>
         <li><button className="btn btn-sm btn-ghost" onClick={handleLogOut}>Logout</button></li>
     </>;
     const links = <>

@@ -50,7 +50,7 @@ const Footer = () => {
                 </nav>
             </div>
             <div className="text-center py-5">
-                <small className="text-xs">Copyright © 2023 - All right reserved by ACME Industries Ltd</small>
+                <small className="text-xs">Copyright © 2023 - All right reserved by Tech's Show Hub Ltd</small>
             </div>
         </footer>
     );
