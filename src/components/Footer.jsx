@@ -2,8 +2,17 @@
 import { CiFacebook, CiTwitter, CiYoutube } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import toast from 'react-hot-toast';
+import { useEffect } from "react";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Footer = () => {
+    useEffect(() => {
+        AOS.init({
+            duration: 400
+        });
+    }, []);
+
     const handleSubmit = e => {
         e.preventDefault();
         //TODO:send to database
@@ -13,7 +22,7 @@ const Footer = () => {
         toast.success("Subscribed.");
     }
     return (
-        <footer className="bg-base-200 rounded-xl">
+        <footer className="bg-base-200 rounded-xl" data-aos="slide-up">
             <div className="footer lg:px-10">
                 {/* 1st 1/2 */}
                 <aside className="mx-auto">

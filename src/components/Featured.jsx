@@ -1,9 +1,10 @@
 
-
 const Featured = () => {
+   
     return (
         <div>
             featured
+            
         </div>
     );
 };

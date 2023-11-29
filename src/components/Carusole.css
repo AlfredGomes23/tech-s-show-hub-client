@@ -1,0 +1,15 @@
+.carousel .control-dots , .carousel .thumbs {
+    display: none;
+}
+.carousel .slide .myLegend  {
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 10px;
+    background: #0000007a;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    margin:  auto;
+    inset: 0;
+}

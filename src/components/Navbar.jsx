@@ -3,10 +3,20 @@ import { Link, NavLink } from "react-router-dom";
 import { TiThMenuOutline } from "react-icons/ti";
 import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
+import { useEffect } from "react";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
     // console.log(user);
+
+    useEffect(() => {
+        AOS.init({
+            duration: 400
+        });
+    }, []);
+
 
     const handleLogOut = async () => {
         try{
@@ -51,7 +61,7 @@ const Navbar = () => {
 
 
     return (
-        <div className="navbar bg-base-200 p-3 rounded-lg shadow-lg mb-3">
+        <div className="navbar bg-base-200 p-3 rounded-lg shadow-lg mb-3" data-aos="slide-down">
             {/* profile dropdown at start */}
             {user?.email && <div className="dropdown md:hidden">
                 <div tabIndex={0} className="btn btn-ghost p-0">
