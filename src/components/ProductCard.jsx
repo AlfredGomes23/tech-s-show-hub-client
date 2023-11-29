@@ -52,10 +52,10 @@ const ProductCard = ({ product, refetch }) => {
             <figure><img src={image} alt={name} className="h-40" /></figure>
             <div className="card-body">
                 <Link to={`/product/${_id}`} className="card-title">{name}</Link>
-                <p className="flex gap-1 justify-center font-medium flex-wrap">Tags:{
-                    tags?.map((tag, idx) =>
-                        <span key={idx} className="bg-secondary h-fit px-1 rounded-xl text-white">{tag}</span>)}
-                </p>
+                    <p className="flex gap-1 justify-center font-medium flex-wrap">Tags:{
+                        tags?.map((tag, idx) =>
+                            <span key={idx} className="bg-secondary h-fit px-1 rounded-xl text-white">{tag}</span>)}
+                    </p>
                 <p>Posted: <Timestamp date={posted} /></p>
                 <div className="flex justify-around">
                     {/* upvote btn */}

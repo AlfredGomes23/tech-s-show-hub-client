@@ -40,7 +40,7 @@ const Banner = () => {
                 <p className='text-secondary font-if font-semibold'>*Get Coupon for Subscription*</p>
             </div>
             {/* slider */}
-            <Carousel autoPlay={true} infiniteLoop={true} className=' md:w-1/2  mx-auto rounded-xl overflow-hidden'>
+            <Carousel autoPlay={true} infiniteLoop={true} className='z-0 md:w-1/2  mx-auto rounded-xl overflow-hidden'>
                 {
                     products?.map(product =>
                         <div key={product?._id} className='h-96 md:h-[60vh] card shadow-xl '>

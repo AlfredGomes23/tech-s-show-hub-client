@@ -19,11 +19,10 @@ const Trending = () => {
         queryKey: ['trending'],
         queryFn: async () => {
             const t = await axiosPublic('/products/trending');
-            console.log(t.data);
             return t.data;
         }
     });
-    console.log(trending);
+    // console.log(trending);
 
     //loading
     if (isLoading) return <span className="loading loading-bars text-warning flex justify-center items-center text-center mx-auto"></span>;
