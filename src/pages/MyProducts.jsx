@@ -3,25 +3,56 @@ import { BiSolidDownvote, BiSolidUpvote } from "react-icons/bi";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../hooks/useAuth";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 
 const MyProducts = () => {
     const {user} = useAuth();
     const axiosSecure = useAxiosSecure();
-    const {data: products =[]} = useQuery({
+    const {data: products =[], refetch} = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
             const r = await axiosSecure.get(`/products/${user?.email}`);
-            console.log(r.data);
             return r.data;
         }
     });
-    console.log(products);
+    // console.log(products);
 
-    const handleDelete = id => {
+    const handleDelete = async id => {
         console.log(id);
+        //confirming
+        Swal.fire({
+            title: "Are you sure?",
+            text: `Your want to Delete the Product`,
+            confirmButtonText: "DELETE",
+            showDenyButton: true,
+            denyButtonText: 'Cancel'
+        }).then(async (result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                try {
+                    const r = await axiosSecure.delete(`/product/${id}`);
+                    if (r.data.deletedCount) {
+                        toast.success("Product DELETED.");
+                        refetch();
+                    }
+                } catch (err) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "error",
+                        title: err,
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
 
-    }
+            }
+        });
+
+       
+    };
+
     return (
         <div>
             <h2 className="text-3xl text-center font-medium">My Products</h2>
@@ -54,7 +85,7 @@ const MyProducts = () => {
                                     </td>
                                     <td>{product?.name}</td>
                                     <td>
-                                        <div className="flex items-center gap-5">
+                                        <div className="flex items-center text-center gap-5">
                                             <span className="text-success">
                                                 <BiSolidUpvote className="text-2xl" />
                                                 {product?.upvotes?.length}
