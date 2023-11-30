@@ -159,7 +159,7 @@ const AddProduct = () => {
                             </div>
                         </div>
                         {/* description */}
-                        <label className="form-control mx-auto w-96 lg:w-full">
+                        <label className="form-control mx-auto w-full max-w-md lg:w-full">
                             <div className="label">
                                 <span className="label-text">Product Description</span>
                             </div>

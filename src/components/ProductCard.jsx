@@ -24,7 +24,7 @@ const ProductCard = ({ product, refetch }) => {
         if (!user?.email) return navigate('/login', { state: { form: location } }, { replace: true });
 
         if (!canVote) return toast.error('You Can Not Vote.');
-        axiosSecure.patch(`/product/${_id}?email=${user?.email}&vote=upvotes`)
+        axiosSecure.patch(`/product/vote/${_id}?email=${user?.email}&vote=upvotes`)
             .then((r) => {
                 if (r.data.modifiedCount) {
                     toast.success('Upvoted successfully.');
@@ -37,7 +37,7 @@ const ProductCard = ({ product, refetch }) => {
         if (!user?.email) return navigate('/login', { state: { form: location } }, { replace: true });
         if (!canVote) return toast.error('You Can Not Vote.');
 
-        axiosSecure.patch(`/product/${_id}?email=${user?.email}&vote=downvotes`)
+        axiosSecure.patch(`/product/vote/${_id}?email=${user?.email}&vote=downvotes`)
             .then((r) => {
                 if (r.data.modifiedCount) {
                     canVote = false;
