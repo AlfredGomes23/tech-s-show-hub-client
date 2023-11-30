@@ -59,8 +59,11 @@ const Products = () => {
 
             {/* cards */}
             <div>
-                <ProductsList products={products} lg='lg:grid-cols-4' refetch={refetch}></ProductsList>
+                {
+                    products?.length === 0 ? <span className="text-warning flex justify-center items-center text-center mx-auto">NO Product Available.</span> :
+                    <ProductsList products={products} lg='lg:grid-cols-4' refetch={refetch}></ProductsList>}
             </div>
+            {/* pagination */}
             <div>
                 <Pagination
                     currentPage={currentPage}

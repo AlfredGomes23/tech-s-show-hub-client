@@ -44,7 +44,7 @@ const AddProduct = () => {
 
         // re-render
         setTags(newTags);
-    };  
+    };
 
     const onSubmit = async (data) => {
         //check if no tags
@@ -70,17 +70,15 @@ const AddProduct = () => {
                 reviews: [],
                 posted: getCurrentTime(),
                 link: link,
-                owner: {
-                    name: user?.displayName,
-                    photoURL: user?.photoURL,
-                    email: user?.email
-                },
+                ownerName: user?.displayName,
+                ownerPhotoURL: user?.photoURL,
+                ownerEmail: user?.email,
                 featured: false,
-                status: 'pending'
+                status: 'Pending'
             };
 
             const r = await axiosSecure.post('/product', product);
-            if(r?.data?.insertedId){
+            if (r?.data?.insertedId) {
                 toast.success("Posted.");
                 navigate('/dashboard/my-products');
             }
@@ -169,7 +167,7 @@ const AddProduct = () => {
                         </label>
                     </div>
                 </div>
-                <button className="btn btn-outline btn-primary text-2xl font-bold btn-wide mx-auto flex mt-5">Submit</button>
+                <button className="btn btn-outline btn-primary text-2xl font-bold btn-wide mx-auto flex mt-5">Post</button>
             </form>
 
         </div >

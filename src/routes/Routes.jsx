@@ -13,6 +13,7 @@ import PrivateRoutes from "./PrivateRoutes";
 import AddProduct from "../pages/AddProduct";
 import MyProfile from "../pages/MyProfile";
 import MyProducts from "../pages/MyProducts";
+import UpdateProduct from "../pages/UpdateProduct";
 
 const routes = createBrowserRouter([
     {
@@ -47,19 +48,24 @@ const routes = createBrowserRouter([
         children: [
             //user routes
             {
-                path: 'add-product',
-                element:
-                    <AddProduct></AddProduct>
-            },
-            {
                 path: 'my-profile',
                 element:
                     <MyProfile></MyProfile>
             },
             {
+                path: 'add-product',
+                element:
+                    <AddProduct></AddProduct>
+            },
+            {
                 path: 'my-products',
                 element:
                     <MyProducts></MyProducts>
+            },
+            {
+                path: 'update-product/:id',
+                element:
+                    <UpdateProduct></UpdateProduct>
             },
             //Moderator
             // {

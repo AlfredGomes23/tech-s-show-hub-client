@@ -14,24 +14,22 @@ const ProductCard = ({ product, refetch }) => {
 
     const { _id, name, tags, image, upvotes, downvotes, posted } = product;
 
-    //check if user can vote______error
+    //check if user can vote
     let canVote = true;
-    if (upvotes?.includes(user?.email) || downvotes?.includes(user?.email) || user?.email === product?.owner?.email) canVote = false;
-    // console.log(product?.owner);
+    if (upvotes?.includes(user?.email) || downvotes?.includes(user?.email) || user?.email === product?.ownerEmail) canVote = false;
 
     // console.log(isVoted());
 
     const handleUp = () => {
         if (!user?.email) return navigate('/login', { state: { form: location } }, { replace: true });
-    // console.log(upvotes, downvotes, product?.owner?.email, user?.email);
 
         if (!canVote) return toast.error('You Can Not Vote.');
         axiosSecure.patch(`/product/${_id}?email=${user?.email}&vote=upvotes`)
             .then((r) => {
                 if (r.data.modifiedCount) {
+                    toast.success('Upvoted successfully.');
                     canVote = false;
                     refetch();
-                    toast.success('Upvoted successfully.');
                 }
             })
     };

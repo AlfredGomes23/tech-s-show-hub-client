@@ -25,7 +25,7 @@ const ProductDetails = () => {
         queryKey: ['product'],
         queryFn: async () => {
             const p = await axiosPublic.get(`/product/${id}`);
-            if (user?.email === p.data.owner.email) canVote = false;
+            if (user?.email === p.data.ownerEmail) canVote = false;
             return p.data;
         }
     });

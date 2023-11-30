@@ -30,7 +30,9 @@ const Featured = () => {
         <div>
             <h2 className="text-3xl text-center font-medium">Featured Products</h2>
             <div className="divider"></div>
-            <ProductsList products={featured} lg='lg:grid-cols-4'></ProductsList>
+            {
+                featured?.length === 0 ? <span className="text-warning flex justify-center items-center text-center mx-auto">NO Product Available.</span>:
+                <ProductsList products={featured} lg='lg:grid-cols-4'></ProductsList>}
 
         </div>
     );
