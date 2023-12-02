@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { FaRegUser, FaStar } from "react-icons/fa";
 import { MdComment, MdEmail } from "react-icons/md";
+import ReportBtn from "../components/ReportBtn";
 
 
 
@@ -117,10 +118,11 @@ const ProductDetails = () => {
                             </button>
                         </div>
                     </div>
-                </div>
+                </div>  
             </div>
             {/* review part */}
-            <div className="flex flex-col lg:flex-row gap-5 items-center mt-10">
+            <div className="flex flex-col lg:flex-row gap-5 items-center mt-10 relative">
+                <ReportBtn id={id}></ReportBtn>
                 {/* reviews */}
                 <div className="text-xl lg:w-2/3 min-h-[495px]">
                     <p className="underline mb-3 font-bold text-center text-2xl">Reviews: {product?.reviews?.length}</p>

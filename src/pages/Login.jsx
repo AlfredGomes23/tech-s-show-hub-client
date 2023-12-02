@@ -68,7 +68,7 @@ const Login = () => {
                         .then(async res => {
                             // console.log(res?.data);
                             //old user
-                            if (res?.data?.isRegistered) {
+                            if (res?.data?._id) {
                                 Swal.fire({
                                     position: "center",
                                     icon: "success",

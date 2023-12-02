@@ -22,7 +22,7 @@ const Trending = () => {
             return t.data;
         }
     });
-    console.log(trending);
+    // console.log(trending);
 
     //loading
     if (isLoading) return <span className="loading loading-bars text-warning flex justify-center items-center text-center mx-auto"></span>;

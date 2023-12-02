@@ -45,7 +45,7 @@ const Register = () => {
                         displayName: name,
                         email,
                         photoURL: url,
-                        role: 'user'
+                        role: 'User'
                     }).then(res => {
                             // console.log(res?.data);
                             if (res?.data?.insertedId) {
