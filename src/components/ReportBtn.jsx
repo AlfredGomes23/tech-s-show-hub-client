@@ -3,6 +3,7 @@ import { useState } from "react";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
+import { MdReport } from "react-icons/md";
 
 
 const ReportBtn = ({ id }) => {
@@ -23,7 +24,7 @@ const ReportBtn = ({ id }) => {
             p_id: id,
             report: e.target.report.value
         });
-        if(res.data.insertedId) {
+        if (res.data.insertedId) {
             toast.success("Reported.");
             setReported(true);
         }
@@ -31,15 +32,17 @@ const ReportBtn = ({ id }) => {
     return (
         <div className="absolute top-1 right-0">
             {/* Open the modal using document.getElementById('ID').showModal() method */}
-            <button className="btn btn-sm text-white btn-error" onClick={() => document.getElementById('my_modal_1').showModal()}>Report</button>
+            <button className="btn btn-sm text-white btn-error" onClick={() => document.getElementById('my_modal_1').showModal()}>
+                <MdReport className="text-2xl" />Report</button>
             <dialog id="my_modal_1" className="modal">
                 <div className="modal-box">
+                    {/* modal content */}
                     <h3 className="font-bold text-2xl text-error font-sil text-center">Report</h3>
-                    { reported ? <p className="text-success text-2xl text-center py-5">Reported</p> :
+                    {reported ? <p className="text-success text-2xl text-center py-5">Reported</p> :
                         <form onSubmit={handleSubmit}>
-                        <textarea name="report" className="w-full min-h-[20vh] input input-bordered rounded-lg px-5 py-3" placeholder="write your report about the product..." disabled={clicked}></textarea>
-                        <input type="submit" className="btn btn-error text-white mt-5" disabled={clicked} />
-                    </form>}
+                            <textarea name="report" className="w-full min-h-[20vh] input input-bordered rounded-lg px-5 py-3" placeholder="write your report about the product..." disabled={clicked}></textarea>
+                            <input type="submit" className="btn btn-error text-white mt-5" disabled={clicked} />
+                        </form>}
                     <div className="modal-action absolute bottom-5 right-5">
                         <form method="dialog">
                             {/* if there is a button in form, it will close the modal */}

@@ -46,15 +46,15 @@ const Products = () => {
 
     return (
         <div>
-            {/* slider */}
-            <Slider products={trending}></Slider>
             <div className='flex justify-between px-20 flex-col md:flex-row items-center'>
                 <h1 className='text-3xl text-center'>All Products</h1>
                 {/* search bar */}
-                <form onSubmit={handleSearch} className="join flex justify-center">
+                <form onSubmit={handleSearch} className="join flex justify-center mb-5">
                     <input type='text' name='tag' className="input input-bordered join-item" placeholder="Search Tag here..." />
                     <button className="btn join-item input-bordered">Search</button>
                 </form></div>
+            {/* slider */}
+            <Slider products={trending}></Slider>
             <div className="divider"></div>
 
             {/* cards */}

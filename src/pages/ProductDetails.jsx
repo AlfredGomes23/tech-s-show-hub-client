@@ -96,14 +96,14 @@ const ProductDetails = () => {
             {/* hero part */}
             <div className="hero min-h-screen rounded-lg" style={{ backgroundImage: `url(${product?.image})` }} >
                 <div className="hero-content text-center text-[#000] font-if font-semibold glass rounded-lg">
-                    <div className="max-w-md">
+                    <div className=" max-w-xs lg:max-w-md w-fit">
                         {/* details */}
-                        <h1 className="mb-5 text-5xl font-bold">{product?.name}</h1>
+                        <h1 className="mb-3 lg:mb-5 text-2xl lg:text-5xl font-bold">{product?.name}</h1>
                         <p className="flex gap-1 justify-center flex-wrap">Tags:{
                             product?.tags?.map((tag, idx) =>
-                                <span key={idx} className="text-lg bg-[#0025] h-fit px-1 rounded-xl text-white">{tag}</span>)}
+                                <span key={idx} className="lg:text-lg bg-[#0025] h-fit px-1 rounded-xl text-white mb-3">{tag}</span>)}
                         </p>
-                        <p className="mb-5 text-lg">{product?.description}..<Link to={product?.link} className="link link-secondary">Read More here</Link></p>
+                        <p className="mb-5 lg:text-lg">{product?.description}..<Link to={product?.link} className="link link-secondary">Read More here</Link></p>
                         {/* vote buttons*/}
                         <div className="flex justify-around font-pacifico">
                             {/* upvote btn */}
@@ -124,7 +124,7 @@ const ProductDetails = () => {
             <div className="flex flex-col lg:flex-row gap-5 items-center mt-10 relative">
                 <ReportBtn id={id}></ReportBtn>
                 {/* reviews */}
-                <div className="text-xl lg:w-2/3 min-h-[495px]">
+                <div className="text-xl lg:w-2/3 lg:min-h-[495px]">
                     <p className="underline mb-3 font-bold text-center text-2xl">Reviews: {product?.reviews?.length}</p>
                     {
                         product?.reviews?.length !== 0 ?

@@ -64,11 +64,10 @@ const MyProducts = () => {
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Photo</th>
+                            <th className="hidden lg:block">Photo</th>
                             <th>Name</th>
                             <th>Vote</th>
                             <th>Status</th>
-                            <th>Action</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -77,15 +76,15 @@ const MyProducts = () => {
                         {
                             products?.map((product, idx) =>
                                 <tr key={idx}>
-                                    <th>{idx + 1}</th>
-                                    <td>
+                                    <th className="w-fit">{idx + 1}</th>
+                                    <td className="hidden lg:block">
                                         <div className="flex items-center gap-3 avatar mask mask-squircle w-12 h-12">
                                             <img src={product?.image} alt="Avatar Tailwind CSS Component" />
                                         </div>
                                     </td>
                                     <td>{product?.name}</td>
                                     <td>
-                                        <div className="flex items-center text-center gap-5">
+                                        <div className="flex items-center text-center gap-0 lg:gap-5">
                                             <span className="text-success">
                                                 <BiSolidUpvote className="text-2xl" />
                                                 {product?.upvotes?.length}
@@ -101,10 +100,8 @@ const MyProducts = () => {
                                             : product?.status === 'Rejected' ? "text-error" : 'text-warning'}>{product?.status}</p>
 
                                     </td>
-                                    <td>
+                                    <td className=" flex flex-col lg:flex-row w-fit gap-1 lg:gap-5">
                                         <Link to={`/dashboard/update-product/${product?._id}`} className="btn btn-warning btn-sm">Update</Link>
-                                    </td>
-                                    <td>
                                         <button onClick={() => handleDelete(product?._id)} className="btn btn-error btn-sm">Delete</button>
                                     </td>
                                 </tr>)
