@@ -31,6 +31,7 @@ const AddProduct = () => {
     const [tags, setTags] = useState([]);
     const navigate = useNavigate();
     const [adding, setAdding] = useState(false);
+
     const { data:limit = {} } = useQuery({
         queryKey: ['limit'],
         queryFn: async () => {
@@ -38,7 +39,7 @@ const AddProduct = () => {
             return res.data.limit;
         }
     });
-    console.log(limit);
+    // console.log(limit);
 
     const handleDelete = i => {
         setTags(tags.filter((tag, index) => index !== i));

@@ -15,7 +15,7 @@ const MyProfile = () => {
             return res.data.role;
         }
     });
-    console.log(role);
+    // console.log(role);
 
     //loading
     if (loading) return <span className="loading loading-bars text-warning flex justify-center items-center text-center mx-auto"></span>;

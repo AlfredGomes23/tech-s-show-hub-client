@@ -1,13 +1,31 @@
-import { useLocation } from "react-router-dom";
+/* eslint-disable react/prop-types */
+import { Navigate, useLocation } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 
 const AdminRoutes = ({ children }) => {
     const location = useLocation();
-    return (
-        <div>
-            
-        </div>
-    );
+    const { user, loading } = useAuth();
+    const axiosSecure = useAxiosSecure();
+
+    const { data: role = null } = useQuery({
+        queryKey: ['role'],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/user?email=${user?.email}`);
+            return res.data.role;
+        }
+    });
+    // console.log(role);
+
+    if (loading) return <div className=' flex justify-center items-center text-center mx-auto'>
+        <p className='text-3xl text-warning'>Loading <span className="loading loading-bars loading-md"></span></p>
+    </div>;
+
+    if (role === 'Admin') return children;
+
+    return <Navigate to='/login' state={{ from: location }} replace></Navigate>;
 };
 
 export default AdminRoutes;

@@ -20,6 +20,7 @@ import Stats from "../pages/Admin/Stats";
 import AllUsers from "../pages/Admin/AllUsers";
 import Coupons from "../pages/Admin/Coupons";
 import ModeratorRoutes from "./ModeratorRoutes";
+import AdminRoutes from "./AdminRoutes";
 
 const routes = createBrowserRouter([
     {
@@ -92,17 +93,23 @@ const routes = createBrowserRouter([
             {
                 path: 'stats',
                 element:
-                    <Stats></Stats>
+                    <AdminRoutes>
+                        <Stats></Stats>
+                    </AdminRoutes>
             },
             {
                 path: 'users',
                 element:
-                    <AllUsers></AllUsers>
+                    <AdminRoutes>
+                        <AllUsers></AllUsers>
+                    </AdminRoutes>
             },
             {
                 path: 'coupons',
                 element:
-                    <Coupons></Coupons>
+                    <AdminRoutes>
+                        <Coupons></Coupons>
+                    </AdminRoutes>
             },
         ]
     },

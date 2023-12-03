@@ -18,7 +18,7 @@ const PaymentPart = ({ amount, setError, refetch }) => {
     useEffect(() => {
         axiosSecure.post('/payment-intent', { amount })
             .then(res => {
-                console.log(res.data.clientSecret);
+                // console.log(res.data.clientSecret);
                 setClientSecret(res.data.clientSecret);
             });
     }, [axiosSecure, amount]);
@@ -38,11 +38,11 @@ const PaymentPart = ({ amount, setError, refetch }) => {
         });
 
         if (error) {
-            console.log('payment error', error);
+            // console.log('payment error', error);
             setError(error.message);
         }
         else {
-            console.log('payment method', paymentMethod)
+            // console.log('payment method', paymentMethod)
             setError('');
         }
         // confirm payment
@@ -57,13 +57,13 @@ const PaymentPart = ({ amount, setError, refetch }) => {
         })
 
         if (confirmError) {
-            console.log('confirm error')
+            toast.error('confirm error')
         }
         else {
-            console.log('payment intent', paymentIntent)
+            // console.log('payment intent', paymentIntent)
             if (paymentIntent.status === 'succeeded') {
                 // on payment successful
-                console.log('transaction id', paymentIntent.id);
+                // console.log('transaction id', paymentIntent.id);
 
                 // now change the role of user
                 const result = await axiosSecure.patch('/user', {

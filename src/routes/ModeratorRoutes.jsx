@@ -9,6 +9,7 @@ const ModeratorRoutes = ({children}) => {
     const location = useLocation();
     const { user, loading } = useAuth();
     const axiosSecure = useAxiosSecure();
+    
     const { data: role = null } = useQuery({
         queryKey: ['role'],
         queryFn: async () => {
@@ -16,7 +17,7 @@ const ModeratorRoutes = ({children}) => {
             return res.data.role;
         }
     });
-    console.log(role);
+    // console.log(role);
     
     if (loading) return <div className=' flex justify-center items-center text-center mx-auto'>
         <p className='text-3xl text-warning'>Loading <span className="loading loading-bars loading-md"></span></p>
