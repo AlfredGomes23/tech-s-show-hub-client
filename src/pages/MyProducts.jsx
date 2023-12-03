@@ -68,7 +68,7 @@ const MyProducts = () => {
                             <th>Name</th>
                             <th>Vote</th>
                             <th>Status</th>
-                            <th>Action</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -107,7 +107,6 @@ const MyProducts = () => {
                                 </tr>)
                         }
                     </tbody>
-
                 </table>
             </div>
         </div>

@@ -10,8 +10,9 @@ const AdminRoutes = ({ children }) => {
     const { user, loading } = useAuth();
     const axiosSecure = useAxiosSecure();
 
-    const { data: role = null } = useQuery({
+    const { data: role = null, isLoading } = useQuery({
         queryKey: ['role'],
+        enabled: !loading,
         queryFn: async () => {
             const res = await axiosSecure.get(`/user?email=${user?.email}`);
             return res.data.role;
@@ -19,7 +20,7 @@ const AdminRoutes = ({ children }) => {
     });
     // console.log(role);
 
-    if (loading) return <div className=' flex justify-center items-center text-center mx-auto'>
+    if (loading || isLoading) return <div className=' flex justify-center items-center text-center mx-auto'>
         <p className='text-3xl text-warning'>Loading <span className="loading loading-bars loading-md"></span></p>
     </div>;
 

@@ -18,9 +18,10 @@ const UpdateProduct = () => {
     const { register, handleSubmit } = useForm();
     const [tags, setTags] = useState([]);
     const navigate = useNavigate();
+    const [updating, setUpdating] = useState(false);
 
     const { data: product = {}, refetch } = useQuery({
-        queryKey: ['product'],
+        queryKey: ['product', id],
         queryFn: async () => {
             const p = await axiosPublic.get(`/product/${id}`);
             setTags(p.data.tags.map(t => ({ id: t, text: t })));
@@ -47,6 +48,7 @@ const UpdateProduct = () => {
     };
 
     const onSubmit = async (data) => {
+        setUpdating(true);
         const { p_name, description, link } = data;
         let upload = false;
 
@@ -73,17 +75,8 @@ const UpdateProduct = () => {
                 name: p_name,
                 image: p_photoUrl,
                 tags: await tags?.map(tag => tag?.text),
-                upvotes: product.upvotes,
-                downvotes: product.downvotes,
                 description: description,
-                reviews: product?.reviews,
-                posted: product?.posted,
                 link: link,
-                ownerName: product?.ownerName,
-                ownerPhotoURL: product?.ownerPhotoURL,
-                ownerEmail: product?.ownerEmail,
-                featured: false,
-                status: 'Pending'
             };
             // console.log(newProduct);
 
@@ -94,8 +87,7 @@ const UpdateProduct = () => {
                 navigate('/dashboard/my-products');
             }
         }
-
-
+        setUpdating(false);
     };
     // console.log(product?.tags);
 
@@ -186,7 +178,10 @@ const UpdateProduct = () => {
                         </div>
                     </div>
                 </div>
-                <button className="btn btn-outline btn-primary text-2xl font-bold btn-wide mx-auto flex mt-5">Post</button>
+                {
+                    updating ?
+                        <button className="btn btn-outline btn-primary text-2xl font-bold btn-wide mx-auto flex mt-5">Posting <span className="loading loading-spinner text-secondary my-3"></span></button>
+                        : <button className="btn btn-outline btn-primary text-2xl font-bold btn-wide mx-auto flex mt-5">Post</button>}
             </form>
 
         </div >
