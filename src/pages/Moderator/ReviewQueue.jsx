@@ -107,12 +107,17 @@ const ReviewQueue = () => {
             }
         });
     };
+
+    if (isLoading) return <p className="loading loading-dots text-secondary flex mx-auto text-center"></p>;
+
     return (
         <div>
             <h2 className="text-3xl text-center font-medium">Review Products Queue</h2>
             <div className="divider"></div>
             <div className="overflow-x-auto">
-                <table className="table w-fit mx-auto">
+                {
+                    pendingProducts?.length === 0 ?
+                        <p className="text-secondary text-3xl text-center">No Product Pending Now</p> : <table className="table w-fit mx-auto">
                     {/* head */}
                     <thead>
                         <tr>
@@ -124,8 +129,6 @@ const ReviewQueue = () => {
                     <tbody className="w-fit">
                         {/* row */}
                         {
-                            isLoading ?
-                                <span className="loading loading-dots text-secondary flex mx-auto text-center"></span> :
                                 pendingProducts?.map((product, idx) =>
                                     <tr key={idx}>
                                         <th>{idx + 1}</th>
@@ -140,7 +143,7 @@ const ReviewQueue = () => {
                                     </tr>)
                         }
                     </tbody>
-                </table>
+                </table>}
             </div>
         </div>
     );

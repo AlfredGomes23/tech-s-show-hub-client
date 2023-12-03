@@ -13,7 +13,7 @@ const Products = () => {
     const [search, setSearch] = useState('');
     const { count } = useLoaderData();
     const perPage = 20;
-    const totalPage = parseInt(count / perPage) + 1;
+    const totalPage = Math.ceil(count / perPage);
 
     const { data: products = [], isLoading, refetch } = useQuery({
         queryKey: ['products', currentPage, search],
@@ -30,7 +30,7 @@ const Products = () => {
         }
     });
 
-    // console.log(products);
+    console.log(count, totalPage);
     //search
     const handleSearch = e => {
         e.preventDefault();

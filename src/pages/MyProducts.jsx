@@ -48,9 +48,7 @@ const MyProducts = () => {
                 }
 
             }
-        });
-
-       
+        });       
     };
 
     return (
