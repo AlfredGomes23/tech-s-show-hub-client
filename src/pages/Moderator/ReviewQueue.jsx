@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 
 const ReviewQueue = () => {
     const axisSecure = useAxiosSecure();
+    
     const { data: pendingProducts = [], refetch, isLoading } = useQuery({
         queryKey: ["pendingProducts"],
         queryFn: async () => {

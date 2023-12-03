@@ -8,8 +8,7 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { FaRegUser, FaStar } from "react-icons/fa";
-import { MdComment, MdEmail } from "react-icons/md";
-import ReportBtn from "../components/ReportBtn";
+import { MdComment, MdEmail, MdReport } from "react-icons/md";
 
 
 
@@ -59,7 +58,7 @@ const ProductDetails = () => {
                 }
             })
     };
-    const onSubmit = async (data) => {
+    const onSubmit = async data => {
         // console.log(data);
         const { comment, rating } = data;
         if (rating === 'rating') return toast.error("Require A Rating selection.");
@@ -86,6 +85,43 @@ const ProductDetails = () => {
         } catch (err) {
             toast.error(err.message);
         }
+
+    };
+    const handleReport = async () => {
+        Swal.fire({
+            title: `Report-[ ${product.name} ]`,
+            text: "Are you sure?",
+            confirmButtonText: "Report",
+            showDenyButton: true,
+            denyButtonText: 'Cancel'
+        }).then(async (result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                try {
+                    const res = await axiosSecure.patch(`/report/${product._id}`);
+                    console.log(res.data.modifiedCount);
+                    if (res.data.modifiedCount) {
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: "Reported",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        refetch();
+                    }
+                } catch (err) {
+                    Swal.fire({
+                        position: "center",
+                        icon: "error",
+                        title: err,
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                }
+
+            }
+        });
 
     };
 
@@ -118,11 +154,14 @@ const ProductDetails = () => {
                             </button>
                         </div>
                     </div>
-                </div>  
+                </div>
             </div>
             {/* review part */}
             <div className="flex flex-col lg:flex-row gap-5 items-center mt-10 relative">
-                <ReportBtn id={id}></ReportBtn>
+                {/* report btn */}
+                <button className="btn btn-sm text-white btn-error absolute top-1 right-0" onClick={handleReport} disabled={product?.reported || false}>
+                    <MdReport className="text-2xl" />Report
+                </button>
                 {/* reviews */}
                 <div className="text-xl lg:w-2/3 lg:min-h-[495px]">
                     <p className="underline mb-3 font-bold text-center text-2xl">Reviews: {product?.reviews?.length}</p>
