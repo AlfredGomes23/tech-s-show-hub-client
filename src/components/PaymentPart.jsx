@@ -13,8 +13,7 @@ const PaymentPart = ({ amount, setError, refetch }) => {
     const stripe = useStripe();
     const elements = useElements();
     const [clientSecret, setClientSecret] = useState('');
-    const [transactionId, setTransactionId] = useState('');
-    const [clicked, setClicked] = useState(false)
+    const [clicked, setClicked] = useState(false);
 
     useEffect(() => {
         axiosSecure.post('/payment-intent', { amount })
@@ -65,15 +64,14 @@ const PaymentPart = ({ amount, setError, refetch }) => {
             if (paymentIntent.status === 'succeeded') {
                 // on payment successful
                 console.log('transaction id', paymentIntent.id);
-                setTransactionId(paymentIntent.id);
 
                 // now change the role of user
                 const result = await axiosSecure.patch('/user', {
-                    email: user?.email, role: "Subscriber", t_id:transactionId
+                    email: user?.email, role: "Subscriber", t_id: paymentIntent.id
                 });
-                console.log(result.data.modifiedCount);
                 if (result.data.modifiedCount) {
                     toast.success("Congrats, to Our New Subscriber.");
+                    toast("Please reload the Page.");
                     refetch();
                 }
             }
@@ -99,7 +97,7 @@ const PaymentPart = ({ amount, setError, refetch }) => {
                     },
                 }}
             />
-            <button className="btn btn-sm mx-auto flex btn-secondary my-4" type="submit" disabled={clicked || !stripe || !clientSecret }>
+            <button className="btn btn-sm mx-auto flex btn-secondary my-4" type="submit" disabled={clicked || !stripe || !clientSecret}>
                 Pay ${amount}
             </button>
 

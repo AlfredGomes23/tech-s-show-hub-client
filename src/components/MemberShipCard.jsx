@@ -16,20 +16,21 @@ const MemberShipCard = () => {
     const { user } = useAuth();
     const [error, setError] = useState('');
     const [amount, setAmount] = useState(299);
-    const [m_id, setM_id] = useState('N/A');
+    const [m_id, setM_id] = useState(null);
     const axiosSecure = useAxiosSecure();
 
     const { data: u = {}, refetch } = useQuery({
         queryKey: ['u'],
         queryFn: async () => {
             const res = axiosSecure.get(`/user/?email=${user?.email}`);
-            return res;
+            return res.data;
         }
     });
     useEffect(() => {
-        if (u?.data?.role === "Subscriber") setM_id(u?.data?._id);
+        if (u?.role === "Subscriber") {
+            setM_id(u?._id);
+        }
     }, [u]);
-
 
     const handleCoupon = () => {
         //verify coupon
@@ -64,7 +65,7 @@ const MemberShipCard = () => {
                     </div>
                 </div>
                 {/* payment data */}
-                {m_id !== "N/A" ? <div className="card-actions justify-end flex flex-col">
+                { u.role === 'Subscriber'? <div className="card-actions justify-end flex flex-col">
                     <p>Member ID:</p>
                     <p className="bg-white w-full text-black px-1">{m_id}</p>
                 </div> :

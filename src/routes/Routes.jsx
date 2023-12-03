@@ -14,6 +14,12 @@ import AddProduct from "../pages/AddProduct";
 import MyProfile from "../pages/MyProfile";
 import MyProducts from "../pages/MyProducts";
 import UpdateProduct from "../pages/UpdateProduct";
+import ReviewQueue from "../pages/Moderator/ReviewQueue";
+import ReportedProducts from "../pages/Moderator/ReportedProducts";
+import Stats from "../pages/Admin/Stats";
+import AllUsers from "../pages/Admin/AllUsers";
+import Coupons from "../pages/Admin/Coupons";
+import ModeratorRoutes from "./ModeratorRoutes";
 
 const routes = createBrowserRouter([
     {
@@ -68,11 +74,36 @@ const routes = createBrowserRouter([
                     <UpdateProduct></UpdateProduct>
             },
             //Moderator
-            // {
-            //     path: 'my-profile',
-            //     element:
-            //         <MyProfile></MyProfile>
-            // },
+            {
+                path: 'review-products',
+                element:
+                    <ModeratorRoutes>
+                        <ReviewQueue></ReviewQueue>
+                    </ModeratorRoutes>
+            },
+            {
+                path: 'reports',
+                element:
+                    <ModeratorRoutes>
+                        <ReportedProducts></ReportedProducts>
+                    </ModeratorRoutes>
+            },
+            //Admin
+            {
+                path: 'stats',
+                element:
+                    <Stats></Stats>
+            },
+            {
+                path: 'users',
+                element:
+                    <AllUsers></AllUsers>
+            },
+            {
+                path: 'coupons',
+                element:
+                    <Coupons></Coupons>
+            },
         ]
     },
     {

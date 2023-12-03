@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -11,6 +11,7 @@ const Register = () => {
     const { createUser, updateUser } = useAuth();
     const navigate = useNavigate();
     const axiosSecure = useAxiosSecure();
+    const [logging, setLogging] = useState(false);
 
     useEffect(() => {
         AOS.init({
@@ -22,6 +23,7 @@ const Register = () => {
 
     //on submit register
     const onSubmit = (data) => {
+        setLogging(true);
         // console.log(data);
         const { name, url, email, password } = data;
         //confirming
@@ -45,22 +47,23 @@ const Register = () => {
                         displayName: name,
                         email,
                         photoURL: url,
-                        role: 'User'
+                        role: 'User',
+                        limit: 1
                     }).then(res => {
-                            // console.log(res?.data);
-                            if (res?.data?.insertedId) {
-                                Swal.fire({
-                                    position: "center",
-                                    icon: "success",
-                                    title: "Account Registered",
-                                    showConfirmButton: false,
-                                    timer: 1000
-                                });
-                                //go to home
-                                navigate('/', { replace: true });
-                            }
-                            else throw "Failed."
-                        });
+                        // console.log(res?.data);
+                        if (res?.data?.insertedId) {
+                            Swal.fire({
+                                position: "center",
+                                icon: "success",
+                                title: "Account Registered",
+                                showConfirmButton: false,
+                                timer: 1000
+                            });
+                            //go to home
+                            navigate('/', { replace: true });
+                        }
+                        else throw "Failed."
+                    });
                 } catch (err) {
                     Swal.fire({
                         position: "center",
@@ -73,8 +76,7 @@ const Register = () => {
 
             }
         });
-
-
+        setLogging(false);
     };
 
     return (
@@ -144,7 +146,9 @@ const Register = () => {
                     </div>
                     {errors.checkbox && <span className="text-center text-error font-semibold">You must accept our Terms and conditions</span>}
                     <div className="form-control">
-                        <button className="btn w-1/2 mx-auto bg-gradient-to-r from-accent to-primary text-secondary text-3xl mt-5">Register</button>
+                        {logging ? 
+                            <p className="btn w-1/2 mx-auto bg-gradient-to-r from-accent to-primary text-secondary text-3xl mt-5">Registering <span className="loading loading-spinner text-warning my-3"></span></p> :
+                        <button className="btn w-1/2 mx-auto bg-gradient-to-r from-accent to-primary text-secondary text-3xl mt-5">Register</button>}
                     </div>
                 </form>
             </div>

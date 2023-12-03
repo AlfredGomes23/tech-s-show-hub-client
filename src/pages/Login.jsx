@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FcGoogle,  FcPrevious } from "react-icons/fc";
+import { FcGoogle, FcPrevious } from "react-icons/fc";
 import { useEffect, useState } from "react";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -16,6 +16,8 @@ const Login = () => {
     const location = useLocation();
     const from = location?.state?.from?.pathname || '/';
     const axiosSecure = useAxiosSecure();
+    const [logging, setLogging] = useState(false);
+    const [gLogging, setGLogging] = useState(false);
     // console.log(from);
 
     useEffect(() => {
@@ -28,6 +30,7 @@ const Login = () => {
 
     //login by email
     const onSubmit = async (data) => {
+        setLogging(true);
         // console.log(data);
         const { email, password } = data;
         try {
@@ -52,11 +55,12 @@ const Login = () => {
                 timer: 1000
             });
         }
-
+        setLogging(false)
     };
 
     //sign in by google
     const handleSignIn = async () => {
+        setGLogging(true);
         try {
             await signIn()
                 .then(async r => {
@@ -86,7 +90,8 @@ const Login = () => {
                                     displayName,
                                     email,
                                     photoURL,
-                                    role: 'user'
+                                    role: 'User',
+                                    limit: 1
                                 })
                                     .then(res => {
                                         console.log(res?.data);
@@ -117,6 +122,7 @@ const Login = () => {
                 timer: 3000
             });
         }
+        setGLogging(false);
     };
 
     return (
@@ -160,7 +166,9 @@ const Login = () => {
                                     className="input input-bordered" required />
                             </div>
                             <div className="form-control">
-                                <button className="btn bg-gradient-to-r from-primary to-accent text-white text-3xl w-1/2 mx-auto ">Login</button>
+                                {logging ?
+                                    <p className="text-3xl flex gpa-1 mx-auto btn bg-gradient-to-r from-primary to-accent text-white">Logging in<span className="loading loading-spinner text-secondary my-3"></span></p> :
+                                    <button className="btn bg-gradient-to-r from-primary to-accent text-white text-3xl w-1/2 mx-auto" disabled={gLogging}>Login</button>}
                             </div>
                         </form>
                         {/* bottom part*/}
@@ -168,9 +176,9 @@ const Login = () => {
 
                         <p className="ml-5 text-secondary font-medium">OR,</p>
 
-                        <button className="btn lg:w-2/3 mx-auto bg-gradient-to-r from-primary to-accent text-white text-2xl mb-5" onClick={handleSignIn} >
+                        <button className="btn lg:w-2/3 mx-auto bg-gradient-to-r from-primary to-accent text-white text-2xl mb-5" onClick={handleSignIn} disabled={logging}>
                             Login with
-                            <FcGoogle className="text-4xl" />
+                            <FcGoogle className={gLogging ? "text-4xl animate-spin" : 'text-4xl'} />
                         </button>
                     </div>
                 </div>

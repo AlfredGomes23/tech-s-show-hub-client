@@ -10,7 +10,7 @@ const ProductCard = ({ product, refetch }) => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
-    const location = useLocation();
+    const location = useLocation(); 
 
     const { _id, name, tags, image, upvotes, downvotes, posted } = product;
 

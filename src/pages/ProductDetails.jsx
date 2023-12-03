@@ -146,7 +146,7 @@ const ProductDetails = () => {
                 </div>
                 {/* add review */}
                 <form onSubmit={handleSubmit(onSubmit)} className="join flex-col w-full gap-5 lg:w-1/3 px-10 mb-5">
-                    <div className="text-2xl font-semibold text-primary text-center underline">Post Your Review</div>
+                    <div className="text-2xl font-semibold text-primary underline">Post Your Review</div>
                     {/* user details */}
                     <label className="form-control w-full max-w-xs">
                         <div className="label">

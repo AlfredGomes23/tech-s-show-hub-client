@@ -1,10 +1,21 @@
 /* eslint-disable react/no-unescaped-entities */
 import useAuth from "../hooks/useAuth";
 import MemberShipCard from "../components/MemberShipCard";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 
 const MyProfile = () => {
     const { user, loading } = useAuth();
+    const axiosSecure = useAxiosSecure();
+    const { data: role = null } = useQuery({
+        queryKey: ['role'],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/user?email=${user?.email}`);
+            return res.data.role;
+        }
+    });
+    console.log(role);
 
     //loading
     if (loading) return <span className="loading loading-bars text-warning flex justify-center items-center text-center mx-auto"></span>;
@@ -18,11 +29,17 @@ const MyProfile = () => {
                     {/* name email card */}
                     <h3 className="text-3xl  font-semibold">Name: {user?.displayName}</h3>
                     <h3 className="text-3xl  font-medium">Email: {user?.email}</h3>
-                    <div>
-                        <p className="text-xl font-medium mt-5 underline">MemberShip: </p>
-                        {/* membership card */}
-                        <MemberShipCard></MemberShipCard>
-                    </div>
+                    <p className="text-3xl my-5">Role: <span
+                        className={role === 'Admin' ? "text-success font-bold" :
+                            role === 'Moderator' ? "text-info font-bold" : ''
+                        }>{role}</span></p>
+                    {
+                        role !== "Admin" && role !== "Moderator" &&
+                        <div>
+                            <p className="text-xl font-medium mt-5 underline">MemberShip: </p>
+                            {/* membership card */}
+                            <MemberShipCard></MemberShipCard>
+                        </div>}
                 </div>
                 {/* my photo */}
                 <div className="avatar flex-col lg:w-1/2">

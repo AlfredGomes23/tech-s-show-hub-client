@@ -6,6 +6,8 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
 
 //get time
 function getCurrentTime() {
@@ -17,7 +19,7 @@ function getCurrentTime() {
 
     return formattedTime;
 }
-
+//hosting keys
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
@@ -28,6 +30,15 @@ const AddProduct = () => {
     const { register, handleSubmit } = useForm();
     const [tags, setTags] = useState([]);
     const navigate = useNavigate();
+    const [adding, setAdding] = useState(false);
+    const { data:limit = {} } = useQuery({
+        queryKey: ['limit'],
+        queryFn: async () => {
+            const res = await axiosSecure.get(`/user?email=${user?.email}`);
+            return res.data.limit;
+        }
+    });
+    console.log(limit);
 
     const handleDelete = i => {
         setTags(tags.filter((tag, index) => index !== i));
@@ -47,6 +58,22 @@ const AddProduct = () => {
     };
 
     const onSubmit = async (data) => {
+        setAdding(true);
+        if (limit < 1) {
+            Swal.fire({
+                icon: 'error',
+                title: "Your can add only one product",
+                text: 'To add more product, Subscribe our Membership.',
+                showCancelButton: true,
+                confirmButtonText: "Subscribe Now",
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    navigate('/dashboard/my-profile');
+                }
+            });
+            return;
+        }
         //check if no tags
         if (tags?.length < 1) return toast.error("Product Tag is Required.");
         const { p_name, description, link } = data;
@@ -83,7 +110,7 @@ const AddProduct = () => {
                 navigate('/dashboard/my-products');
             }
         }
-
+        setAdding(false);
     };
 
     return (
@@ -167,7 +194,7 @@ const AddProduct = () => {
                         </label>
                     </div>
                 </div>
-                <button className="btn btn-outline btn-primary text-2xl font-bold btn-wide mx-auto flex mt-5">Post</button>
+                <button className="btn btn-outline btn-primary text-2xl font-bold btn-wide mx-auto flex mt-5" disabled={adding}>Post</button>
             </form>
 
         </div >
