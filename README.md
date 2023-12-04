@@ -1,8 +1,17 @@
-# React + Vite
+# Features
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+  
 
-Currently, two official plugins are available:
+- User can login and register user email and also Gmail.( Password must contain at least one upper, lower case letter and a number)
+- User can post review, vote, report any product, and post one product, To post more product user need to subscribe. User can see posted products also.
+- User can enjoy discount on subscription using coupon displaying home page.
+- Moderator can review pending and reported products.
+- Admin can manage users and coupons, check stats.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+	
+
+  
+
+## [Live Link1](https://tech-s-show-hub.web.app)
+## [Live Link2](https://tech-s-show-hub.firebaseapp.com)
+## [Live Link3](https://dazzling-chimera-e53bd5.netlify.app)
