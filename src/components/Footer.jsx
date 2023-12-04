@@ -17,7 +17,7 @@ const Footer = () => {
         e.preventDefault();
         //TODO:send to database
         const email = e.target.email.value;
-        console.log(email);
+        // console.log(email);
 
         toast.success("Subscribed.");
     }

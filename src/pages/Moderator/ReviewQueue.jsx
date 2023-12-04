@@ -15,7 +15,7 @@ const ReviewQueue = () => {
             return res.data;
         }
     });
-    console.log(pendingProducts);
+    // console.log(pendingProducts);
 
     const handleFeatured = async product => {        
         Swal.fire({
@@ -117,7 +117,8 @@ const ReviewQueue = () => {
             <div className="overflow-x-auto">
                 {
                     pendingProducts?.length === 0 ?
-                        <p className="text-secondary text-3xl text-center">No Product Pending Now</p> : <table className="table w-fit mx-auto">
+                        <p className="text-secondary text-3xl text-center">No Product Pending Now</p> :
+                        <table className="table w-fit mx-auto">
                     {/* head */}
                     <thead>
                         <tr>

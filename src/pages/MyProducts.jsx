@@ -8,9 +8,9 @@ import Swal from "sweetalert2";
 
 
 const MyProducts = () => {
-    const {user} = useAuth();
+    const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
-    const {data: products =[], refetch} = useQuery({
+    const { data: products = [], refetch, isLoading } = useQuery({
         queryKey: ['products'],
         queryFn: async () => {
             const r = await axiosSecure.get(`/products/${user?.email}`);
@@ -20,7 +20,7 @@ const MyProducts = () => {
     // console.log(products);
 
     const handleDelete = async id => {
-        console.log(id);
+        // console.log(id);
         //confirming
         Swal.fire({
             title: "Are you sure?",
@@ -48,8 +48,10 @@ const MyProducts = () => {
                 }
 
             }
-        });       
+        });
     };
+    //loading
+    if (isLoading) return <span className="loading loading-bars text-warning flex justify-center items-center text-center mx-auto"></span>;
 
     return (
         <div>

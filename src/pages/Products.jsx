@@ -30,7 +30,7 @@ const Products = () => {
         }
     });
 
-    console.log(count, totalPage);
+    // console.log(count, totalPage);
     //search
     const handleSearch = e => {
         e.preventDefault();

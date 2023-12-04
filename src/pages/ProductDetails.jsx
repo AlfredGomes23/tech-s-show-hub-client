@@ -99,7 +99,7 @@ const ProductDetails = () => {
             if (result.isConfirmed) {
                 try {
                     const res = await axiosSecure.patch(`/report/${product._id}`);
-                    console.log(res.data.modifiedCount);
+                    // console.log(res.data.modifiedCount);
                     if (res.data.modifiedCount) {
                         Swal.fire({
                             position: "center",

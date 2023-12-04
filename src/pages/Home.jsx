@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import Banner from "../components/Banner";
+import CouponsSlider from "../components/CouponsSlider";
 import Featured from "../components/Featured";
 import Trending from "../components/Trending";
 import { Helmet } from 'react-helmet-async';
@@ -12,6 +13,7 @@ const Home = () => {
             <Banner></Banner>
             <Featured></Featured>
             <Trending></Trending>
+            <CouponsSlider></CouponsSlider>
         </div>
     );
 };

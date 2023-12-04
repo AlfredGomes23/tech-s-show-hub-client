@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/prop-types */
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import useAuth from "../hooks/useAuth";
@@ -23,6 +24,7 @@ const PaymentPart = ({ amount, setError, refetch }) => {
             });
     }, [axiosSecure, amount]);
 
+    //handle pay btn
     const handlePay = async e => {
         e.preventDefault();
         setClicked(true);
@@ -74,6 +76,7 @@ const PaymentPart = ({ amount, setError, refetch }) => {
                     toast.success("Congrats, to Our New Subscriber.");
                     toast("Please reload the Page.");
                     refetch();
+                    document.getElementById('payment_modal').close();
                 }
             }
         }
@@ -101,7 +104,6 @@ const PaymentPart = ({ amount, setError, refetch }) => {
             <button className="btn btn-sm mx-auto flex btn-secondary my-4" type="submit" disabled={clicked || !stripe || !clientSecret}>
                 Pay ${amount}
             </button>
-
         </form>
     );
 };

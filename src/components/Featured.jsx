@@ -15,7 +15,7 @@ const Featured = () => {
         });
     }, []);
 
-    const { data: featured = [], isLoading } = useQuery({
+    const { data: featured = [], isLoading, refetch } = useQuery({
         queryKey: ['featured'],
         queryFn: async () => {
             const products = await axiosPublic('/products');
@@ -32,7 +32,7 @@ const Featured = () => {
             <div className="divider"></div>
             {
                 featured?.length === 0 ? <span className="text-warning flex justify-center items-center text-center mx-auto">NO Product Available.</span>:
-                <ProductsList products={featured} lg='lg:grid-cols-4'></ProductsList>}
+                <ProductsList products={featured} refetch={refetch} lg='lg:grid-cols-4'></ProductsList>}
 
         </div>
     );

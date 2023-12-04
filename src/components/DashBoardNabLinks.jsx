@@ -7,7 +7,7 @@ const DashBoardNabLinks = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
     const { data: role = null } = useQuery({
-        queryKey: ['role'],
+        queryKey: ['role', user],
         queryFn: async () => {
             const res = await axiosSecure.get(`/user?email=${user?.email}`);
             return res.data.role;
@@ -28,7 +28,7 @@ const DashBoardNabLinks = () => {
                     role === "Moderator" ?
                         <>
                             <li><NavLink to='/dashboard/review-products'>Review Product Queue</NavLink></li>
-                            <li><NavLink to='/dashboard/reports'>All Reports</NavLink></li>
+                            <li><NavLink to='/dashboard/reports'>Reports Products</NavLink></li>
 
                         </> :
                         <>

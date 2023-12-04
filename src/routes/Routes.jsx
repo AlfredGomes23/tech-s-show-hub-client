@@ -24,6 +24,7 @@ import AdminRoutes from "./AdminRoutes";
 
 const routes = createBrowserRouter([
     {
+        //home routes
         path: "/",
         errorElement: <Error404></Error404>,
         element: <MainLayout></MainLayout>,
@@ -46,6 +47,7 @@ const routes = createBrowserRouter([
             },
         ]
     },
+    //dashboard routes
     {
         path: '/dashboard',
         element:
@@ -74,7 +76,7 @@ const routes = createBrowserRouter([
                 element:
                     <UpdateProduct></UpdateProduct>
             },
-            //Moderator
+            //Moderator routes
             {
                 path: 'review-products',
                 element:
@@ -89,7 +91,7 @@ const routes = createBrowserRouter([
                         <ReportedProducts></ReportedProducts>
                     </ModeratorRoutes>
             },
-            //Admin
+            //Admin routes
             {
                 path: 'stats',
                 element:
@@ -110,7 +112,7 @@ const routes = createBrowserRouter([
                     <AdminRoutes>
                         <Coupons></Coupons>
                     </AdminRoutes>
-            },
+            }
         ]
     },
     {

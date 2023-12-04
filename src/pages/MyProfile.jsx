@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 const MyProfile = () => {
     const { user, loading } = useAuth();
     const axiosSecure = useAxiosSecure();
-    const { data: role = null } = useQuery({
+    const { data: role = null, isLoading } = useQuery({
         queryKey: ['role'],
         queryFn: async () => {
             const res = await axiosSecure.get(`/user?email=${user?.email}`);
@@ -18,7 +18,7 @@ const MyProfile = () => {
     // console.log(role);
 
     //loading
-    if (loading) return <span className="loading loading-bars text-warning flex justify-center items-center text-center mx-auto"></span>;
+    if (loading || isLoading) return <span className="loading loading-bars text-warning flex justify-center items-center text-center mx-auto"></span>;
 
     return (
         <div className="my-10">

@@ -66,7 +66,7 @@ const Login = () => {
                 .then(async r => {
                     const user = r?.user;
                     const { displayName, email, photoURL } = user;
-                    console.log(r?.user);
+                    // console.log(r?.user);
                     //checking if new user
                     await axiosSecure.get(`/user/?email=${r?.user?.email}`)
                         .then(async res => {
@@ -112,7 +112,6 @@ const Login = () => {
                             }
                         })
                 })
-
         } catch (err) {
             Swal.fire({
                 position: "center",
