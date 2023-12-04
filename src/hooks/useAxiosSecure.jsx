@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 const axiosSecure = axios.create({
-    baseURL: 'http://localhost:5000',
-    withCredentials:true
+    baseURL: 'https://server-techs-show-hub.vercel.app',
+    withCredentials: true
 })
 
 const useAxiosSecure = () => {
@@ -26,7 +26,7 @@ const useAxiosSecure = () => {
     //intercept response for errors
     axiosSecure.interceptors.response.use(response => response, async error => {
         const status = error?.response?.status;
-        if(status === 401 || status === 403){
+        if (status === 401 || status === 403) {
             await logOut();
             Swal.fire({
                 position: "center",
@@ -39,7 +39,7 @@ const useAxiosSecure = () => {
         }
         return Promise.reject(error);
     });
-    
+
     return axiosSecure;
 };
 

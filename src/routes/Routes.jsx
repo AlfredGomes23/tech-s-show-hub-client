@@ -36,7 +36,7 @@ const routes = createBrowserRouter([
             {
                 path: 'products',
                 element: <Products></Products>,
-                loader: () => fetch('http://localhost:5000/productsCount')
+                loader: () => fetch('https://server-techs-show-hub.vercel.app/productsCount')
             },
             {
                 path: 'product/:id',
