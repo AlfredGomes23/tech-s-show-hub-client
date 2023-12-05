@@ -78,7 +78,7 @@ const ReportedProducts = () => {
                                         <tr key={idx}>
                                             <th>{idx + 1}</th>
                                             <td className="w-56 md:w-96">{product?.name}</td>
-                                            <td className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 w-fit gap-1 lg:gap-5">
+                                            <td className="flex flex-col lg:flex-row w-fit gap-1 lg:gap-5">
                                                 <Link to={`/product/${product._id}`} className="btn btn-sm btn-primary">View Details</Link>
                                                 <button onClick={() => handleDelete(product)} className="btn btn-sm btn-error text-white" disabled={product.status === "Rejected"}>Delete</button>
 

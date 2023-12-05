@@ -76,7 +76,11 @@ const AddProduct = () => {
             return;
         }
         //check if no tags
-        if (tags?.length < 1) return toast.error("Product Tag is Required.");
+        if (tags?.length < 1) {
+            toast.error("Product Tag is Required.");
+            setAdding(false);
+            return;
+        }
         const { p_name, description, link } = data;
 
         //upload image to hosting server

@@ -16,7 +16,9 @@ const ProductCard = ({ product, refetch }) => {
 
     //check if user can vote
     let canVote = true;
-    if (upvotes?.includes(user?.email) || downvotes?.includes(user?.email) || user?.email === product?.ownerEmail) canVote = false;
+
+    if (( upvotes?.length && upvotes?.includes(user?.email)) || (downvotes?.length && downvotes?.includes(user?.email)) || user?.email === product?.ownerEmail) canVote = false;
+    // if(upvotes?.length )
 
     // console.log(isVoted());
 
