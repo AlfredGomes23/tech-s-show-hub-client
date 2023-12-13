@@ -73,14 +73,14 @@ const routes = createBrowserRouter([
                 path: 'my-products',
                 element:
                     <UsersRoutes>
-                    <MyProducts></MyProducts>
+                        <MyProducts></MyProducts>
                     </UsersRoutes >
             },
             {
                 path: 'update-product/:id',
                 element:
                     <UsersRoutes>
-                    <UpdateProduct></UpdateProduct>
+                        <UpdateProduct></UpdateProduct>
                     </UsersRoutes >
             },
             //Moderator routes

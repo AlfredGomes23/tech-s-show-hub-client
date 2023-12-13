@@ -8,29 +8,43 @@ import useAxiosPublic from '../hooks/useAxiosPublic';
 
 
 const Products = () => {
-    const axiosPublic =  useAxiosPublic()
+    const axiosPublic = useAxiosPublic()
     const [currentPage, setCurrentPage] = useState(0);
     const [search, setSearch] = useState('');
-    const { count } = useLoaderData();
+    const [count, setCount] = useState(useLoaderData().count);
     const perPage = 20;
-    const totalPage = Math.ceil(count / perPage);
+    const [totalPage, setTotalPage] = useState(Math.ceil(count / perPage));
+
+    const { data: productsCount = 0 } = useQuery({
+        queryKey: ["productsCount", search],
+        queryFn: async () => {
+            const res = await axiosPublic.get(`/productsCount?tag=${search}`);
+            setCount(res.data.count);
+            setTotalPage(Math.ceil(res.data.count / perPage));
+            return res.data.count;
+        }
+    });
 
     const { data: products = [], isLoading, refetch } = useQuery({
-        queryKey: ['products', currentPage, search],
+        queryKey: ['products', currentPage, count],
         queryFn: async () => {
             const res = await axiosPublic.get(`/products?page=${currentPage}&limit=${perPage}&search=${search}`);
             return res.data;
         }
     });
+
+
+
+
     const { data: trending = [] } = useQuery({
         queryKey: ['trending'],
         queryFn: async () => {
-            const t = await axiosPublic('/products/trending');
+            const t = await axiosPublic('/trending');
             return t.data;
         }
     });
 
-    // console.log(count, totalPage);
+    console.log(count, totalPage);
     //search
     const handleSearch = e => {
         e.preventDefault();
@@ -61,7 +75,7 @@ const Products = () => {
             <div>
                 {
                     products?.length === 0 ? <span className="text-warning flex justify-center items-center text-center mx-auto">NO Product Available.</span> :
-                    <ProductsList products={products} lg='lg:grid-cols-4' refetch={refetch}></ProductsList>}
+                        <ProductsList products={products} lg='lg:grid-cols-4' refetch={refetch}></ProductsList>}
             </div>
             {/* pagination */}
             <div>

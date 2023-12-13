@@ -18,7 +18,7 @@ const Trending = () => {
     const { data: trending = [], isLoading } = useQuery({
         queryKey: ['trending'],
         queryFn: async () => {
-            const t = await axiosPublic('trending');
+            const t = await axiosPublic('/trending');
             return t.data;
         }
     });
