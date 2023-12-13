@@ -21,6 +21,7 @@ import AllUsers from "../pages/Admin/AllUsers";
 import Coupons from "../pages/Admin/Coupons";
 import ModeratorRoutes from "./ModeratorRoutes";
 import AdminRoutes from "./AdminRoutes";
+import UsersRoutes from "./UsersRoutes";
 
 const routes = createBrowserRouter([
     {
@@ -64,17 +65,23 @@ const routes = createBrowserRouter([
             {
                 path: 'add-product',
                 element:
-                    <AddProduct></AddProduct>
+                    <UsersRoutes>
+                        <AddProduct></AddProduct>
+                    </UsersRoutes>
             },
             {
                 path: 'my-products',
                 element:
+                    <UsersRoutes>
                     <MyProducts></MyProducts>
+                    </UsersRoutes >
             },
             {
                 path: 'update-product/:id',
                 element:
+                    <UsersRoutes>
                     <UpdateProduct></UpdateProduct>
+                    </UsersRoutes >
             },
             //Moderator routes
             {
