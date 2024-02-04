@@ -15,3 +15,5 @@
 ## [Live Link1](https://tech-s-show-hub.web.app)
 ## [Live Link2](https://tech-s-show-hub.firebaseapp.com)
 ## [Live Link3](https://dazzling-chimera-e53bd5.netlify.app)
+
+## [Server Repo Link](https://github.com/AlfredGomes23/tech-s-show-hub-server)
